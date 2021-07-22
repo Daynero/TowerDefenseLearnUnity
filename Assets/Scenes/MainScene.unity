@@ -8360,7 +8360,7 @@ GameObject:
   - component: {fileID: 1198651701}
   - component: {fileID: 1198651700}
   m_Layer: 5
-  m_Name: AnotherTurretItem
+  m_Name: MissleLauncherItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12681,7 +12681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standartTurretPrefab: {fileID: 609369124278764460, guid: 3e921065354cee0439605b6588f9d86e, type: 3}
-  anotherTurretPrefab: {fileID: 609369124278764460, guid: 9c96b5a307e5fb940af754e36ebaabe6, type: 3}
+  anotherTurretPrefab: {fileID: 5079946960927807044, guid: 77af449d12df69b45b02baf1ec74fa83, type: 3}
 --- !u!1001 &1776916726
 PrefabInstance:
   m_ObjectHideFlags: 0
