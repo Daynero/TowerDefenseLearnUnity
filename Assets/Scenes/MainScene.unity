@@ -8452,7 +8452,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1808262780}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: PurchaseAnotherTurret
+        m_MethodName: PurchaseMissileLauncher
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12681,7 +12681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standartTurretPrefab: {fileID: 609369124278764460, guid: 3e921065354cee0439605b6588f9d86e, type: 3}
-  anotherTurretPrefab: {fileID: 5079946960927807044, guid: 77af449d12df69b45b02baf1ec74fa83, type: 3}
+  MissileLauncherPrefab: {fileID: 0}
 --- !u!1001 &1776916726
 PrefabInstance:
   m_ObjectHideFlags: 0
