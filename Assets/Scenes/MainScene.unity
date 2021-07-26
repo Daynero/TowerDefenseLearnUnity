@@ -773,63 +773,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3963329406562575768, guid: 2483b6dbf964ea746ae70a4f85c009d0, type: 3}
   m_PrefabInstance: {fileID: 111701842}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &112083395
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 26.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 19.71
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273602, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1897583920348273607, guid: b7003893e0209184c993a937c4b3377c, type: 3}
-      propertyPath: m_Name
-      value: MissleExplosionEffect
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b7003893e0209184c993a937c4b3377c, type: 3}
 --- !u!1001 &120559093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13413,6 +13356,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6541af64d53ae44984802ef56baa80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  standartTurret:
+    prefab: {fileID: 609369124278764460, guid: 3e921065354cee0439605b6588f9d86e, type: 3}
+    cost: 100
+  missleLauncher:
+    prefab: {fileID: 5079946960927807044, guid: 77af449d12df69b45b02baf1ec74fa83, type: 3}
+    cost: 150
 --- !u!1001 &1814032785
 PrefabInstance:
   m_ObjectHideFlags: 0

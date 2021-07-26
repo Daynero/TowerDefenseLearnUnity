@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    public TorretBluePrint standartTurret;
+    public TorretBluePrint missleLauncher;
+
     private BuildManager buildManager;
 
     void Start()
