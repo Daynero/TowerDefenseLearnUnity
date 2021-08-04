@@ -4,11 +4,12 @@ using UnityEngine.EventSystems;
 public class Node : MonoBehaviour
 {
     public Color hoverColor;
+    public Color notEnoughMoneyColor;
     public Vector3 positionOffset;
 
     [Header("Optional")]
     public GameObject turret;
- 
+
     private Renderer rend;
     private Color startColor;
 
@@ -22,7 +23,7 @@ public class Node : MonoBehaviour
         buildManager = BuildManager.instance;
     }
 
-    public Vector3 GetBuildPosition ()
+    public Vector3 GetBuildPosition()
     {
         return transform.position + positionOffset;
     }
@@ -52,7 +53,15 @@ public class Node : MonoBehaviour
         if (!buildManager.CanBuild)
             return;
 
-        rend.material.color = hoverColor;
+        if (buildManager.HasMoney)
+        {
+            rend.material.color = hoverColor;
+        }
+        else
+        {
+            rend.material.color = notEnoughMoneyColor;
+        }
+
     }
 
     void OnMouseExit()
