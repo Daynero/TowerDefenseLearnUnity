@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     public float speed;
 
     public float startHealth = 100f;
-
+    
+    [HideInInspector]
     public float health;
 
     public int earnings = 50;
@@ -45,6 +46,9 @@ public class Enemy : MonoBehaviour
         var effect = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
         PlayerStats.Money += earnings;
         Destroy(effect, 5f);
+
+        WaveSpawner.EnemiesAlive--;
+
         Destroy(gameObject);   
     }
 }
