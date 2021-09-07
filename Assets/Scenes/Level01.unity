@@ -16132,8 +16132,9 @@ MonoBehaviour:
     rate: 3
   enemyPregab: {fileID: 8534339674216344813, guid: 9d64917c4860bff49b65af57f894da20, type: 3}
   spawnPoint: {fileID: 1821727090}
-  timeBetweenWaves: 5
+  timeBetweenWaves: 0
   waveCountdownText: {fileID: 1458315475}
+  gameManager: {fileID: 1771767127}
 --- !u!4 &1771767124
 Transform:
   m_ObjectHideFlags: 0
@@ -16190,6 +16191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 923609852}
+  nextLevel: Level02
+  levelToUnlock: 2
+  sceneFader: {fileID: 2207543507895443755, guid: a3a91e9329bea1f4cb4511bffed58b0b, type: 3}
 --- !u!114 &1771767128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16204,7 +16208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 431848216}
   menuSceneName: MainMenu
-  sceneFader: {fileID: 954524186}
+  sceneFader: {fileID: 2207543507895443755, guid: a3a91e9329bea1f4cb4511bffed58b0b, type: 3}
 --- !u!1001 &1776916726
 PrefabInstance:
   m_ObjectHideFlags: 0
