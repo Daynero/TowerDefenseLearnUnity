@@ -1,29 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
-    public TurretBlueprint standartTurret;
-    public TurretBlueprint missleLauncher;
-    public TurretBlueprint laserBeamer;
+    [SerializeField] private TurretBlueprint standartTurret;
+    [SerializeField] private TurretBlueprint missleLauncher;
+    [SerializeField] private TurretBlueprint laserBeamer;
+    [SerializeField] private Button selectDefaultTurretButton;
+    [SerializeField] private Button selectMissileLauncherButton;
+    [SerializeField] private Button selectLaserBeamerButton;
 
     private BuildManager buildManager;
 
-    void Start()
+    private void Start()
     {
         buildManager = BuildManager.instance;
-    }
-    public void SelectStandardTurret()
-    {
-        buildManager.SelectTurretToBuild(standartTurret);
-    }
 
-    public void SelectMissileLauncher()
-    {
-       buildManager.SelectTurretToBuild(missleLauncher);
-    }
+        selectDefaultTurretButton.onClick.AddListener(delegate { buildManager.SelectTurretToBuild(standartTurret); });
 
-    public void SelectLaserBeamer()
-    {
-        buildManager.SelectTurretToBuild(laserBeamer);
+        selectMissileLauncherButton.onClick.AddListener(delegate { buildManager.SelectTurretToBuild(missleLauncher); });
+
+        selectLaserBeamerButton.onClick.AddListener(delegate { buildManager.SelectTurretToBuild(laserBeamer); });
     }
 }
