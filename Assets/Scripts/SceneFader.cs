@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -5,8 +6,23 @@ using UnityEngine;
 
 public class SceneFader : MonoBehaviour
 {
+    public static SceneFader instance;
+    
     public Image img;
     public AnimationCurve curve;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
