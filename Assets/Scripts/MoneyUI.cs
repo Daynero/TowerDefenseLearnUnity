@@ -1,9 +1,9 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MoneyUI : MonoBehaviour
 {
-    public Text moneyText;
+    public TMP_Text moneyText;
 
     // Update is called once per frame
     void Update()

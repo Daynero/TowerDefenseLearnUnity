@@ -1,9 +1,10 @@
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 
 public class LivesUI : MonoBehaviour
 {
-    public Text livesText;
+    [SerializeField] private TMP_Text livesText;
 
     // Update is called once per frame
     void Update()
