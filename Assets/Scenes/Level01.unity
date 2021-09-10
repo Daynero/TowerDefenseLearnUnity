@@ -16247,7 +16247,6 @@ MonoBehaviour:
   - enemy: {fileID: 4620191327195322877, guid: 546e68c8e91c9d2448844a467bb50cf0, type: 3}
     count: 5
     rate: 3
-  enemyPregab: {fileID: 8534339674216344813, guid: 9d64917c4860bff49b65af57f894da20, type: 3}
   spawnPoint: {fileID: 1821727090}
   timeBetweenWaves: 0
   waveCountdownText: {fileID: 72818133}
@@ -16278,9 +16277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98db31bd567698f48ae5e59f9b1c9131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildEfffect: {fileID: 2706993106443067545, guid: 5aa92428fafef4941afa00a536055100, type: 3}
-  sellEfffect: {fileID: 2943425621896436995, guid: 9ea0c5de9b5593141ab6786095713513, type: 3}
   nodeUI: {fileID: 562866663}
+  buildEffect: {fileID: 2706993106443067545, guid: 5aa92428fafef4941afa00a536055100, type: 3}
+  sellEffect: {fileID: 2943425621896436995, guid: 9ea0c5de9b5593141ab6786095713513, type: 3}
 --- !u!114 &1771767126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17161,19 +17160,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   standartTurret:
     prefab: {fileID: 609369124278764460, guid: 3e921065354cee0439605b6588f9d86e, type: 3}
-    cost: 100
     upgradedPrefab: {fileID: 609369124278764460, guid: d20fed8da9f63a541a828a402a29df5e, type: 3}
     upgradeCost: 60
+    cost: 100
   missleLauncher:
     prefab: {fileID: 5079946960927807044, guid: 77af449d12df69b45b02baf1ec74fa83, type: 3}
-    cost: 150
     upgradedPrefab: {fileID: 5079946960927807044, guid: bfa642b760c192245ac28cad82157bb0, type: 3}
     upgradeCost: 80
+    cost: 150
   laserBeamer:
     prefab: {fileID: 7416702564690020703, guid: a6398e0d96c6b4b4787c9c73b3c3ae36, type: 3}
-    cost: 350
     upgradedPrefab: {fileID: 7416702564690020703, guid: 46f3eb4203fcf73429c3b26662a1ef88, type: 3}
     upgradeCost: 100
+    cost: 350
   selectDefaultTurretButton: {fileID: 1807185275}
   selectMissileLauncherButton: {fileID: 981829734}
   selectLaserBeamerButton: {fileID: 1798057847}
@@ -19910,7 +19909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2207543507895443754, guid: a3a91e9329bea1f4cb4511bffed58b0b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3a91e9329bea1f4cb4511bffed58b0b, type: 3}

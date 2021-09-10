@@ -1,18 +1,22 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private string levelToLoad = "MainLevel";
     [SerializeField] private SceneFader sceneFader;
-    
-    public void Play ()
-    {
-        sceneFader.FadeTo(levelToLoad);
-    }
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button quitButton;
 
-    public void Quit ()
+    private void Start()
     {
-        Debug.Log("Exiting...");
-        Application.Quit();
+        playButton.onClick.AddListener(delegate { sceneFader.FadeTo(levelToLoad); });
+        
+        quitButton.onClick.AddListener(delegate
+        {
+            Debug.Log("Exiting...");
+            Application.Quit();
+        });
     }
 }
