@@ -35,26 +35,26 @@ public class SceneFader : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
-        float t = 1f;
+        float time = 1f;
 
-        while (t > 0f)
+        while (time > 0f)
         {
-            t -= Time.deltaTime;
-            float a = curve.Evaluate(t);
-            img.color = new Color (0f, 0f, 0f, a);
+            time -= Time.deltaTime;
+            float alpha = curve.Evaluate(time);
+            img.color = new Color (0f, 0f, 0f, alpha);
             yield return 0;
         }
     }
 
     private IEnumerator FadeOut(string scene)
     {
-        float t = 0f;
+        float time = 0f;
 
-        while (t < 1f)
+        while (time < 1f)
         {
-            t += Time.deltaTime;
-            float a = curve.Evaluate(t);
-            img.color = new Color(0f, 0f, 0f, a);
+            time += Time.deltaTime;
+            float alpha = curve.Evaluate(time);
+            img.color = new Color(0f, 0f, 0f, alpha);
             yield return 0;
         }
 
