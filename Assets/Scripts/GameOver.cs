@@ -7,19 +7,18 @@ public class GameOver : MonoBehaviour
     [SerializeField] private Text roundsText;
     [SerializeField] private string menuSceneName = "MainMenu";
     [SerializeField] private SceneFader sceneFader;
+    [SerializeField] private Button retryLevelButton;
+    [SerializeField] private Button goToMenuButton;
 
     private void OnEnable()
     {
         roundsText.text = PlayerStats.Rounds.ToString();
     }
 
-    public void Retry ()
+    private void Start()
     {
-        sceneFader.FadeTo(SceneManager.GetActiveScene().name);
-    }
-
-    public void Menu ()
-    {
-        sceneFader.FadeTo(menuSceneName);
+        retryLevelButton.onClick.AddListener(delegate { sceneFader.FadeTo(SceneManager.GetActiveScene().name); });
+        
+        goToMenuButton.onClick.AddListener(delegate { sceneFader.FadeTo(menuSceneName); });
     }
 }
