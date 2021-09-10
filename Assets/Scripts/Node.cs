@@ -3,23 +3,19 @@ using UnityEngine.EventSystems;
 
 public class Node : MonoBehaviour
 {
-    public Color hoverColor;
-    public Color notEnoughMoneyColor;
-    public Vector3 positionOffset;
+    [SerializeField] private BuildManager buildManager;
+    [SerializeField] private Color hoverColor;
+    [SerializeField] private Color notEnoughMoneyColor;
+    [SerializeField] private Vector3 positionOffset;
 
-    [HideInInspector]
-    public GameObject turret;
-    [HideInInspector]
-    public TurretBlueprint turretBlueprint;
-    [HideInInspector]
-    public bool isUpgrade = false;
-
+    private GameObject turret;
     private Renderer rend;
     private Color startColor;
-
-    BuildManager buildManager;
-
-    void Start()
+    
+    [HideInInspector] public TurretBlueprint turretBlueprint;
+    [HideInInspector] public bool isUpgrade = false;
+    
+    private void Start()
     {
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
@@ -32,7 +28,7 @@ public class Node : MonoBehaviour
         return transform.position + positionOffset;
     }
 
-    void OnMouseDown()
+    public void OnMouseDown()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -49,63 +45,62 @@ public class Node : MonoBehaviour
         BuildTorret(buildManager.GetTurretToBuild());
     }
 
-    void BuildTorret (TurretBlueprint blueprint)
+    public void BuildTorret(TurretBlueprint blueprint)
     {
-        if (PlayerStats.Money < blueprint.cost)
+        if (PlayerStats.PlayerMoney < blueprint.cost)
         {
             Debug.Log("Not enough money to build that!");
             return;
         }
 
-        PlayerStats.Money -= blueprint.cost;
+        PlayerStats.PlayerMoney -= blueprint.cost;
 
-        var _turret = (GameObject)Instantiate(blueprint.prefab, GetBuildPosition(), Quaternion.identity);
+        GameObject _turret = (GameObject) Instantiate(blueprint.prefab, GetBuildPosition(), Quaternion.identity);
         turret = _turret;
 
         turretBlueprint = blueprint;
 
-        var effect = (GameObject)Instantiate(buildManager.buildEfffect, GetBuildPosition(), Quaternion.identity);
+        GameObject effect = (GameObject) Instantiate(buildManager.buildEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
 
-        Debug.Log("Money left: " + PlayerStats.Money);
+        Debug.Log("Money left: " + PlayerStats.PlayerMoney);
     }
 
     public void UpgradeTurret()
     {
-        if (PlayerStats.Money < turretBlueprint.upgradeCost)
+        if (PlayerStats.PlayerMoney < turretBlueprint.upgradeCost)
         {
             Debug.Log("Not enough money to upgrade that!");
             return;
         }
 
-        PlayerStats.Money -= turretBlueprint.upgradeCost;
-
-        //Get rid of the old turret
+        PlayerStats.PlayerMoney -= turretBlueprint.upgradeCost;
+        
         Destroy(turret);
-
-        //Build a new one
-        var _turret = (GameObject)Instantiate(turretBlueprint.upgradedPrefab, GetBuildPosition(), Quaternion.identity);
+        
+        GameObject _turret = (GameObject) Instantiate(turretBlueprint.upgradedPrefab, GetBuildPosition(), Quaternion.identity);
         turret = _turret;
 
-        var effect = (GameObject)Instantiate(buildManager.buildEfffect, GetBuildPosition(), Quaternion.identity);
+        GameObject effect = (GameObject) Instantiate(buildManager.buildEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
 
         isUpgrade = true;
 
         Debug.Log("Turret upgraded");
     }
+
     public void SellTurret()
     {
-        PlayerStats.Money += turretBlueprint.GetSellAmount();
+        PlayerStats.PlayerMoney += turretBlueprint.GetSellAmount();
 
-        var effect = (GameObject)Instantiate(buildManager.sellEfffect, GetBuildPosition(), Quaternion.identity);
+        var effect = (GameObject) Instantiate(buildManager.sellEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
 
         Destroy(turret);
         turretBlueprint = null;
     }
 
-    void OnMouseEnter()
+    public void OnMouseEnter()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -121,10 +116,9 @@ public class Node : MonoBehaviour
         {
             rend.material.color = notEnoughMoneyColor;
         }
-
     }
 
-    void OnMouseExit()
+    public void OnMouseExit()
     {
         rend.material.color = startColor;
     }

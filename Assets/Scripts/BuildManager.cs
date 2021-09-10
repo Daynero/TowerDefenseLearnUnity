@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class BuildManager : MonoBehaviour
 {
-    public static BuildManager instance;
+    [SerializeField] private NodeUI nodeUI;
 
-    void Awake()
+    private TurretBlueprint turretToBuild;
+    private Node selectedNode;
+    
+    public GameObject buildEffect;
+    public GameObject sellEffect;
+    public static BuildManager instance;
+    
+    private void Awake()
     {
         if (instance != null)
         {
@@ -14,17 +21,9 @@ public class BuildManager : MonoBehaviour
 
         instance = this;
     }
-
-    public GameObject buildEfffect;
-    public GameObject sellEfffect;
-
-    private TurretBlueprint turretToBuild;
-    private Node selectedNode;
-
-    public NodeUI nodeUI;
-
+    
     public bool CanBuild { get { return turretToBuild != null; } }
-    public bool HasMoney { get { return PlayerStats.Money >= turretToBuild.cost; } }
+    public bool HasMoney { get { return PlayerStats.PlayerMoney >= turretToBuild.cost; } }
 
     public void SelectNode(Node node)
     {
@@ -48,7 +47,6 @@ public class BuildManager : MonoBehaviour
     public void SelectTurretToBuild(TurretBlueprint turret)
     {
         turretToBuild = turret;
-
         DeselectNode();
     }
 

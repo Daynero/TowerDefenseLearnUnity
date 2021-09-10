@@ -1,16 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NodeUI : MonoBehaviour
 {
-    public GameObject ui;
-
-    public Text upgradeCost;
-    public Button upgradeButton;
-
-    public Text sellAmount;
+    [SerializeField] private GameObject ui;
+    [SerializeField] private Text upgradeCost;
+    [SerializeField] private Button upgradeButton;
+    [SerializeField] private Text sellAmount;
 
     private Node target;
 

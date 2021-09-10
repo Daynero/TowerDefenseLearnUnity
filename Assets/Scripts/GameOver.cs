@@ -4,13 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    public Text roundsText;
+    [SerializeField] private Text roundsText;
+    [SerializeField] private string menuSceneName = "MainMenu";
+    [SerializeField] private SceneFader sceneFader;
 
-    public string menuSceneName = "MainMenu";
-
-    public SceneFader sceneFader;
-
-    void OnEnable()
+    private void OnEnable()
     {
         roundsText.text = PlayerStats.Rounds.ToString();
     }

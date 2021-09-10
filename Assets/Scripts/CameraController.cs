@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float panSpeed = 30f;
-    public float panBorderThickness = 10f;
-    public float scrollSpeed = 5f;
-    public float minY = 10f;
-    public float maxY = 80f;
-    void Update()
+    [SerializeField] private float panSpeed = 30f;
+    [SerializeField] private float panBorderThickness = 10f;
+    [SerializeField] private float scrollSpeed = 5f;
+    [SerializeField] private float minY = 10f;
+    [SerializeField] private float maxY = 80f;
+    private void Update()
     {
         if (GameManager.gameIsOver)
         {
-            this.enabled = false;
+            enabled = false;
             return;
         }
 
@@ -35,9 +35,9 @@ public class CameraController : MonoBehaviour
             transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
         }
 
-        var scroll = Input.GetAxis("Mouse ScrollWheel");
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        var pos = transform.position;
+        Vector3 pos = transform.position;
 
         pos.y -= scroll * 1000 * scrollSpeed * Time.deltaTime;
         pos.y = Mathf.Clamp(pos.y, minY, maxY);

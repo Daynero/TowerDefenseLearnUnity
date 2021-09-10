@@ -2,53 +2,50 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    private Transform target;
-    private Enemy targetEnemy;
+    [Header("General")] 
+    [SerializeField] private float range = 15f;
 
-    [Header("General")]
+    [Header("Use Bullets (default)")] 
+    [SerializeField] private GameObject bulletPrefab;
 
-    public float range = 15f;
-
-    [Header("Use Bullets (default)")]
-    public GameObject bulletPrefab;
-    public float fireRate = 1f;
+    [SerializeField] private float fireRate = 1f;
     private float fireCountdown = 0f;
 
-    [Header("Use Laser")]
-    public bool useLaser = false;
+    [Header("Use Laser")] 
+    [SerializeField] private bool useLaser = false;
 
-    public float damageOverTime = 30;
-    public float slowAmount = 0.5f;
+    [SerializeField] private float damageOverTime = 30;
+    [SerializeField] private float slowAmount = 0.5f;
 
-    public LineRenderer lineRenderer;
-    public ParticleSystem impactEffect;
-    public Light impactLight;
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private ParticleSystem impactEffect;
+    [SerializeField] private Light impactLight;
 
-    [Header("Unity Setup Fields")]
+    [Header("Unity Setup Fields")] 
+    [SerializeField] private string enemyTag = "Enemy";
 
-    public string enemyTag = "Enemy";
+    [SerializeField] private Transform partToRotate;
+    [SerializeField] private float turnSpeed = 10f;
 
-    public Transform partToRotate;
-    public float turnSpeed = 10f;
+    [SerializeField] private Transform firePoint;
 
-    public Transform firePoint;
-
-
-    // Start is called before the first frame update
-    void Start()
+    private Transform target;
+    private Enemy targetEnemy;
+    
+    private void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
-    void UpdateTarget()
+    public void UpdateTarget()
     {
-        var enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-        var shortestDistance = Mathf.Infinity;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
 
-        foreach (var enemy in enemies)
+        foreach (GameObject enemy in enemies)
         {
-            var distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
             if (distanceToEnemy < shortestDistance)
             {
@@ -67,9 +64,8 @@ public class Turret : MonoBehaviour
             target = null;
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
         if (target == null)
         {
@@ -101,15 +97,15 @@ public class Turret : MonoBehaviour
         }
     }
 
-    void LockOnTarget()
+    public void LockOnTarget()
     {
-        var dir = target.position - transform.position;
-        var lookRotation = Quaternion.LookRotation(dir);
-        var rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+        Vector3 dir = target.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Vector3 rotation = Quaternion.Lerp(partToRotate.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
         partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
     }
 
-    void Laser()
+    public void Laser()
     {
         targetEnemy.TakeDamage(damageOverTime * Time.deltaTime);
         targetEnemy.Slow(slowAmount);
@@ -124,24 +120,24 @@ public class Turret : MonoBehaviour
         lineRenderer.SetPosition(0, firePoint.position);
         lineRenderer.SetPosition(1, target.position);
 
-        var dir = firePoint.position - target.position;
+        Vector3 dir = firePoint.position - target.position;
 
         impactEffect.transform.position = target.position + dir.normalized * 0.5f;
 
         impactEffect.transform.rotation = Quaternion.LookRotation(dir);
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        var bulletGO = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        var bullet = bulletGO.GetComponent<Bullet>();
+        Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation).GetComponent<Bullet>();
 
         if (bullet != null)
         {
-            bullet.Seek(target);
+            bullet.SeekTarget(target);
         }
     }
-    void OnDrawGizmosSelected()
+
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);

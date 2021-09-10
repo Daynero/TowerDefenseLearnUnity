@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -6,11 +5,11 @@ using UnityEngine;
 
 public class SceneFader : MonoBehaviour
 {
-    public static SceneFader instance;
+    [SerializeField] private Image img;
+    [SerializeField] private AnimationCurve curve;
     
-    public Image img;
-    public AnimationCurve curve;
-
+    private static SceneFader instance;
+    
     private void Awake()
     {
         if (instance == null)
@@ -34,27 +33,27 @@ public class SceneFader : MonoBehaviour
         StartCoroutine(FadeOut(scene));
     }
 
-    IEnumerator FadeIn()
+    private IEnumerator FadeIn()
     {
-        var t = 1f;
+        float t = 1f;
 
         while (t > 0f)
         {
             t -= Time.deltaTime;
-            var a = curve.Evaluate(t);
+            float a = curve.Evaluate(t);
             img.color = new Color (0f, 0f, 0f, a);
             yield return 0;
         }
     }
 
-    IEnumerator FadeOut(string scene)
+    private IEnumerator FadeOut(string scene)
     {
-        var t = 0f;
+        float t = 0f;
 
         while (t < 1f)
         {
             t += Time.deltaTime;
-            var a = curve.Evaluate(t);
+            float a = curve.Evaluate(t);
             img.color = new Color(0f, 0f, 0f, a);
             yield return 0;
         }

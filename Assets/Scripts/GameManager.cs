@@ -1,25 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private string nextLevel = "Level02";
+    [SerializeField] private int levelToUnlock = 2;
+    [SerializeField] private SceneFader sceneFader;
+
     public static bool gameIsOver;
 
-    public GameObject gameOverUI;
-
-    public string nextLevel = "Level02";
-    public int levelToUnlock = 2;
-
-    public SceneFader sceneFader;
-
-    void Start()
+    private void Start()
     {
         gameIsOver = false;
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
         if (gameIsOver) 
             return;
@@ -29,13 +24,13 @@ public class GameManager : MonoBehaviour
             EndGame();
         }
 
-        if (PlayerStats.Lives <= 0)
+        if (PlayerStats.PlayerLives <= 0)
         {
             EndGame();
         }
     }
 
-    void EndGame()
+    private void EndGame()
     {
         gameIsOver = true;
         gameOverUI.SetActive(true);
@@ -45,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("LEVEL WON!");
         PlayerPrefs.SetInt("levelReached", levelToUnlock);
+        PlayerPrefs.Save();
         sceneFader.FadeTo(nextLevel);
     }
 }

@@ -1,22 +1,15 @@
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private float speed = 70f;
+    [SerializeField] private int damage = 50;
+    [SerializeField] private float explosionRadius = 0f;
+    [SerializeField] private GameObject impactEffect;
+
     private Transform target;
-
-    public float speed = 70f;
-    public int damage = 50;
-    public float explosionRadius = 0f;
-    public GameObject impactEffect;
-
-    public void Seek(Transform _target)
-    {
-        target = _target;
-    }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
         if (target == null)
         {
@@ -24,8 +17,8 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        var dir = target.position - transform.position;
-        var distanceThisFrame = speed * Time.deltaTime;
+        Vector3 dir = target.position - transform.position;
+        float distanceThisFrame = speed * Time.deltaTime;
 
         if (dir.magnitude <= distanceThisFrame)
         {
@@ -38,9 +31,14 @@ public class Bullet : MonoBehaviour
 
     }
 
-    void HitTarget()
+    public void SeekTarget(Transform _target)
     {
-        var effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
+        target = _target;
+    }
+    
+    private void HitTarget()
+    {
+        GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
         Destroy(effectIns, 5f);
 
         if (explosionRadius > 0f)
@@ -55,9 +53,9 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Explode()
+    private void Explode()
     {
-        var colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
         foreach (var collider in colliders)
         {
@@ -68,17 +66,17 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void Damage(Transform enemy)
+    private void Damage(Transform _enemy)
     {
-        var e = enemy.GetComponent<Enemy>();
+        Enemy enemy = _enemy.GetComponent<Enemy>();
 
-        if (e != null)
+        if (enemy != null)
         {
-            e.TakeDamage(damage);
+            enemy.TakeDamage(damage);
         }
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, explosionRadius);

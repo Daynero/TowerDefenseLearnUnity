@@ -1,20 +1,19 @@
-using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public static int Money;
+    public static int PlayerMoney;
     public int startMoney = 400;
 
-    public static int Lives;
+    public static int PlayerLives;
     public int startLives = 20;
 
     public static int Rounds;
 
-    void Start()
+    private void Start()
     {
-        Money = startMoney;
-        Lives = startLives;
+        PlayerMoney = startMoney;
+        PlayerLives = startLives;
 
         Rounds = 0;
     }

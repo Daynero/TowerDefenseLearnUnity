@@ -1,29 +1,21 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public static int EnemiesAlive = 0;
+    [SerializeField] private Wave[] waves;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private float timeBetweenWaves = 5f;
+    [SerializeField] private TMP_Text waveCountdownText;
+    [SerializeField] private GameManager gameManager;
 
-    public Wave[] waves;
-
-    public Transform enemyPregab;
-
-    public Transform spawnPoint;
-
-    public float timeBetweenWaves = 5f;
     private float countdown = 2f;
-
-    public TMP_Text waveCountdownText;
-
-    public GameManager gameManager;
-
     private int waveIndex = 0;
 
-    // Update is called once per frame
-    void Update()
+    public static int EnemiesAlive = 0;
+
+    private void Update()
     {
         if (EnemiesAlive > 0)
         {
@@ -48,7 +40,7 @@ public class WaveSpawner : MonoBehaviour
     {
         PlayerStats.Rounds++;
 
-        var wave = waves[waveIndex];
+        Wave wave = waves[waveIndex];
 
         EnemiesAlive = wave.count;
 
@@ -63,12 +55,12 @@ public class WaveSpawner : MonoBehaviour
         if (waveIndex == waves.Length)
         {
             gameManager.WinLevel();
-            this.enabled = false;
+            enabled = false;
         }
     }
 
-    void SpawnEnemy(GameObject enemy)
+    private void SpawnEnemy(GameObject enemy)
     {
-        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation); 
+        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
     }
 }
