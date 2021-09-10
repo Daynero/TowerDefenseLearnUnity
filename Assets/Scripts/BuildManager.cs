@@ -11,6 +11,9 @@ public class BuildManager : MonoBehaviour
     public GameObject sellEffect;
     public static BuildManager instance;
     
+    public bool CanBuild { get { return turretToBuild != null; } }
+    public bool HasMoney { get { return PlayerStats.instance.PlayerMoney >= turretToBuild.cost; } }
+    
     private void Awake()
     {
         if (instance != null)
@@ -22,9 +25,6 @@ public class BuildManager : MonoBehaviour
         instance = this;
     }
     
-    public bool CanBuild { get { return turretToBuild != null; } }
-    public bool HasMoney { get { return PlayerStats.PlayerMoney >= turretToBuild.cost; } }
-
     public void SelectNode(Node node)
     {
         if (selectedNode == node)

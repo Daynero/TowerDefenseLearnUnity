@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Image healthBar;
 
     private float health;
-
+    
     [HideInInspector] public float speed;
     public float startSpeed = 10f;
 
@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         GameObject effect = (GameObject) Instantiate(deathEffect, transform.position, Quaternion.identity);
-        PlayerStats.PlayerMoney += earnings;
+        PlayerStats.instance.PlayerMoney += earnings;
         Destroy(effect, 5f);
 
         WaveSpawner.EnemiesAlive--;
