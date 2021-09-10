@@ -42,7 +42,7 @@ public class BuildManager : MonoBehaviour
     public void DeselectNode()
     {
         selectedNode = null;
-        nodeUI.Hide();
+        nodeUI.HidePopUpMenu();
     }
     public void SelectTurretToBuild(TurretBlueprint turret)
     {

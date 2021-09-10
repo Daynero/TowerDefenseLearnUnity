@@ -31,18 +31,18 @@ public class NodeUI : MonoBehaviour
         ui.SetActive(true);
     }
 
-    public void  Hide ()
+    public void  HidePopUpMenu ()
     {
         ui.SetActive(false);
     }
 
-    public void Upgrade()
+    public void UpgradeTurret()
     {
         target.UpgradeTurret();
         BuildManager.instance.DeselectNode();
     }
 
-    public void Sell ()
+    public void SellTurret ()
     {
         target.SellTurret();
         BuildManager.instance.DeselectNode();

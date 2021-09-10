@@ -2179,19 +2179,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 219509768}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1771767128}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: RetryLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &219509768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2346,7 +2334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19eaf16aea5ec6a4b952e79366a3be3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesText: {fileID: 262325704}
 --- !u!114 &262325704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2882,6 +2869,7 @@ GameObject:
   - component: {fileID: 332586621}
   - component: {fileID: 332586620}
   - component: {fileID: 332586619}
+  - component: {fileID: 332586623}
   m_Layer: 5
   m_Name: OverlayCanvas
   m_TagString: Untagged
@@ -2975,6 +2963,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &332586623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332586618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6d5653a67eb2a4d856c7bc78388bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyText: {fileID: 556372586}
+  livesText: {fileID: 262325704}
 --- !u!1 &348845301
 GameObject:
   m_ObjectHideFlags: 0
@@ -4291,19 +4293,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 524463933}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1771767128}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: ToggleGamePause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &524463933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4796,7 +4786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee172b69128e57148925a8449da49a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyText: {fileID: 556372586}
 --- !u!1 &562866661
 GameObject:
   m_ObjectHideFlags: 0
@@ -8962,6 +8951,8 @@ MonoBehaviour:
   roundsText: {fileID: 1408620997}
   menuSceneName: MainMenu
   sceneFader: {fileID: 954524186}
+  retryLevelButton: {fileID: 1971955366}
+  goToMenuButton: {fileID: 1578653944}
 --- !u!225 &923609855
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -9389,7 +9380,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562866663}
         m_TargetAssemblyTypeName: NodeUI, Assembly-CSharp
-        m_MethodName: Upgrade
+        m_MethodName: UpgradeTurret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16081,19 +16072,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1766561226}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1771767128}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: GoToMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1766561226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16294,6 +16273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startMoney: 400
   startLives: 1
+  Rounds: 0
 --- !u!114 &1771767127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16325,6 +16305,9 @@ MonoBehaviour:
   ui: {fileID: 431848216}
   menuSceneName: MainMenu
   sceneFader: {fileID: 2207543507895443755, guid: a3a91e9329bea1f4cb4511bffed58b0b, type: 3}
+  toggleGamePauseButton: {fileID: 524463932}
+  retryLevelButton: {fileID: 219509767}
+  goToMenuButton: {fileID: 1766561225}
 --- !u!1001 &1776916726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18203,7 +18186,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562866663}
         m_TargetAssemblyTypeName: NodeUI, Assembly-CSharp
-        m_MethodName: Sell
+        m_MethodName: SellTurret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

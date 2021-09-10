@@ -9065,7 +9065,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562866663}
         m_TargetAssemblyTypeName: NodeUI, Assembly-CSharp
-        m_MethodName: Upgrade
+        m_MethodName: UpgradeTurret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18209,7 +18209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 562866663}
         m_TargetAssemblyTypeName: NodeUI, Assembly-CSharp
-        m_MethodName: Sell
+        m_MethodName: SellTurret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

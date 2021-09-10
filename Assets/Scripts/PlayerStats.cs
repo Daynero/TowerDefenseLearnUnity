@@ -7,12 +7,34 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int startMoney = 400;
     [SerializeField] private int startLives = 20;
 
-    public event Action<int> MoneyUpdateNotify;
-    public event Action<int> LivesUpdateNotify;
     private int playerMoney;
     private int playerLives;
-    public static PlayerStats instance;
+    
+    public event Action<int> MoneyUpdateNotify;
+    public event Action<int> LivesUpdateNotify;
 
+    public static PlayerStats instance;
+    public int Rounds;
+    public int PlayerMoney
+    {
+        get => playerMoney;
+        set
+        {
+            playerMoney = value;
+            MoneyUpdateNotify?.Invoke(playerMoney);
+        }
+    
+    }
+
+    public int PlayerLives
+    {
+        get => playerLives;
+        set
+        {
+            playerLives = value;
+            LivesUpdateNotify?.Invoke(playerLives);
+        }
+    }
     private void Awake()
     {
         if (instance != null)
@@ -26,35 +48,6 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public int PlayerMoney
-    {
-        get
-        {
-            return playerMoney;
-        }
-        set
-        {
-            playerMoney = value;
-            MoneyUpdateNotify?.Invoke(playerMoney);
-        }
-    
-    }
-
-    public int PlayerLives
-    {
-        get
-        {
-            return playerLives;
-        }
-        set
-        {
-            playerLives = value;
-            LivesUpdateNotify?.Invoke(playerLives);
-        }
-    }
-    public int Rounds;
-    
-    
     
     private void Start()
     {

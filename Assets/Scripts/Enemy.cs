@@ -31,14 +31,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Slow(float pct)
+    public void Slow(float deceleration)
     {
-        speed = startSpeed * (1f - pct);
+        speed = startSpeed * (1f - deceleration);
     }
 
     private void Die()
     {
-        GameObject effect = (GameObject) Instantiate(deathEffect, transform.position, Quaternion.identity);
+        GameObject effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
         PlayerStats.instance.PlayerMoney += earnings;
         Destroy(effect, 5f);
 
