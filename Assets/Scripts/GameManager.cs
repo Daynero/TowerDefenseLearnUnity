@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
             EndGame();
         }
 
-        if (PlayerStats.PlayerLives <= 0)
+        if (PlayerStats.instance.PlayerLives <= 0)
         {
             EndGame();
         }

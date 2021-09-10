@@ -8,7 +8,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int startLives = 20;
 
     public event Action<int> MoneyUpdateNotify;
+    public event Action<int> LivesUpdateNotify;
     private int playerMoney;
+    private int playerLives;
     public static PlayerStats instance;
 
     private void Awake()
@@ -37,8 +39,20 @@ public class PlayerStats : MonoBehaviour
         }
     
     }
-    public static int PlayerLives;
-    public static int Rounds;
+
+    public int PlayerLives
+    {
+        get
+        {
+            return playerLives;
+        }
+        set
+        {
+            playerLives = value;
+            LivesUpdateNotify?.Invoke(playerLives);
+        }
+    }
+    public int Rounds;
     
     
     

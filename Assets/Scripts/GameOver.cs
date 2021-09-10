@@ -12,7 +12,7 @@ public class GameOver : MonoBehaviour
 
     private void OnEnable()
     {
-        roundsText.text = PlayerStats.Rounds.ToString();
+        roundsText.text = PlayerStats.instance.Rounds.ToString();
     }
 
     private void Start()
