@@ -1975,7 +1975,6 @@ GameObject:
   - component: {fileID: 218575818}
   - component: {fileID: 218575817}
   - component: {fileID: 218575816}
-  - component: {fileID: 218575820}
   - component: {fileID: 218575819}
   m_Layer: 0
   m_Name: Canvas
@@ -2074,29 +2073,10 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 218575814}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!95 &218575820
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218575814}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 77d919e37f300014abdcdbed22586b56, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &219509765
 GameObject:
   m_ObjectHideFlags: 0
@@ -4808,6 +4788,8 @@ MonoBehaviour:
   upgradeCost: {fileID: 1521396039}
   upgradeButton: {fileID: 973616661}
   sellAmount: {fileID: 1718714013}
+  appearPopUpSpeed: 4.5
+  canvasGroup: {fileID: 218575819}
 --- !u!1 &572271327
 GameObject:
   m_ObjectHideFlags: 0

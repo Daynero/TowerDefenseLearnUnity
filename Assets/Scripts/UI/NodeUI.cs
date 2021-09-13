@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,18 +9,37 @@ public class NodeUI : MonoBehaviour
     [SerializeField] private Text upgradeCost;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Text sellAmount;
+    [SerializeField] private float appearPopUpSpeed;
+    [SerializeField] private CanvasGroup canvasGroup;
 
-    private Node target;
+    private Node selectedTurrel;
+    private float popUpAlpha;
+
+    private void Start()
+    {
+        
+    }
+
+    private IEnumerator AnimateAppear()
+    {
+        while (canvasGroup.alpha < 1 && ui.activeInHierarchy)
+        {
+            popUpAlpha += appearPopUpSpeed * Time.deltaTime;
+            canvasGroup.alpha = popUpAlpha;
+            
+            yield return null;
+        }
+    }
 
     public void SetTarget(Node _target)
     {
-        target = _target;
+        selectedTurrel = _target;
 
-        transform.position = target.GetBuildPosition();
+        transform.position = selectedTurrel.GetBuildPosition();
 
-        if (!target.isUpgrade)
+        if (!selectedTurrel.isUpgrade)
         {
-            upgradeCost.text = "$" + target.turretBlueprint.upgradeCost;
+            upgradeCost.text = "$" + selectedTurrel.turretBlueprint.upgradeCost;
             upgradeButton.interactable = true;
         } else
         {
@@ -26,9 +47,13 @@ public class NodeUI : MonoBehaviour
             upgradeButton.interactable = false;
         }
 
-        sellAmount.text = "$" + target.turretBlueprint.GetSellAmount();
+        sellAmount.text = "$" + selectedTurrel.turretBlueprint.GetSellAmount();
 
         ui.SetActive(true);
+        popUpAlpha = 0;
+        canvasGroup.alpha = 0;
+
+        StartCoroutine(AnimateAppear());
     }
 
     public void  HidePopUpMenu ()
@@ -38,13 +63,13 @@ public class NodeUI : MonoBehaviour
 
     public void UpgradeTurret()
     {
-        target.UpgradeTurret();
+        selectedTurrel.UpgradeTurret();
         BuildManager.instance.DeselectNode();
     }
 
     public void SellTurret ()
     {
-        target.SellTurret();
+        selectedTurrel.SellTurret();
         BuildManager.instance.DeselectNode();
     }
 }
