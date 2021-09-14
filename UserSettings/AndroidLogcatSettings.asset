@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "1489ecfc",
         "name": "com.DefaultCompany.TowerDefense",
-        "processId": 6885,
+        "processId": 8937,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -210,6 +210,24 @@
             "deviceId": "1489ecfc",
             "name": "com.DefaultCompany.TowerDefense",
             "processId": 6885,
+            "exited": false
+        },
+        {
+            "deviceId": "1489ecfc",
+            "name": "com.DefaultCompany.TowerDefense",
+            "processId": 7644,
+            "exited": false
+        },
+        {
+            "deviceId": "1489ecfc",
+            "name": "com.DefaultCompany.TowerDefense",
+            "processId": 8642,
+            "exited": false
+        },
+        {
+            "deviceId": "1489ecfc",
+            "name": "com.DefaultCompany.TowerDefense",
+            "processId": 8937,
             "exited": false
         }
     ],
