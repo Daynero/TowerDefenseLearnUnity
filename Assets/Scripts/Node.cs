@@ -28,8 +28,10 @@ public class Node : MonoBehaviour
         return transform.position + positionOffset;
     }
 
-    public void OnMouseDown()
+    public void OnMouseUp()
     {
+        IndicateCanBuild();
+        
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -42,10 +44,10 @@ public class Node : MonoBehaviour
         if (!buildManager.CanBuild)
             return;
 
-        BuildTorret(buildManager.GetTurretToBuild());
+        BuildTurret(buildManager.GetTurretToBuild());
     }
 
-    public void BuildTorret(TurretBlueprint blueprint)
+    public void BuildTurret(TurretBlueprint blueprint)
     {
         if (PlayerStats.instance.PlayerMoney < blueprint.cost)
         {
@@ -100,7 +102,7 @@ public class Node : MonoBehaviour
         turretBlueprint = null;
     }
 
-    public void OnMouseEnter()
+    public void IndicateCanBuild()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;

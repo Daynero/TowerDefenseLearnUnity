@@ -13,10 +13,10 @@ public class GameManager : MonoBehaviour
     {
         gameIsOver = false;
     }
-    
+
     private void Update()
     {
-        if (gameIsOver) 
+        if (gameIsOver)
             return;
 
         if (Input.GetKeyDown("e"))
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
-    public void WinLevel ()
+    public void WinLevel()
     {
         Debug.Log("LEVEL WON!");
         PlayerPrefs.SetInt("levelReached", levelToUnlock);

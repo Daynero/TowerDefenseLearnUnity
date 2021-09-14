@@ -11,13 +11,17 @@ public class NodeUI : MonoBehaviour
     [SerializeField] private Text sellAmount;
     [SerializeField] private float appearPopUpSpeed;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private CameraController cameraController;
 
     private Node selectedTurrel;
     private float popUpAlpha;
 
-    private void Start()
+    private bool canShowPopUp
     {
-        
+        get
+        {
+            return (!cameraController.isDragging && !cameraController.isZooming);
+        }
     }
 
     private IEnumerator AnimateAppear()
@@ -33,6 +37,11 @@ public class NodeUI : MonoBehaviour
 
     public void SetTarget(Node _target)
     {
+        if (!canShowPopUp)
+        {
+            return;
+        }
+        
         selectedTurrel = _target;
 
         transform.position = selectedTurrel.GetBuildPosition();
