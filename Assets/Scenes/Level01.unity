@@ -9184,7 +9184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cdc13da32563649a501c00a3a48fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 30
+  panSpeed: 0.3
   panBorderThickness: 10
   scrollSpeed: 5
   minY: 10
