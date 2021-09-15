@@ -1,12 +1,13 @@
 using System;
 using ScreenPresenters;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOverScreenView : MonoBehaviour, IGameOverScreenView
 {
-    [SerializeField] private Text roundsText;
+    [SerializeField] private TMP_Text roundsText;
     [SerializeField] private Button retryLevelButton;
     [SerializeField] private Button goToMenuButton;
     
