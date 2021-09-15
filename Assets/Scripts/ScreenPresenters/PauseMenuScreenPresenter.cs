@@ -1,5 +1,6 @@
 using System;
 using Core;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ScreenPresenters
@@ -26,19 +27,27 @@ namespace ScreenPresenters
 
         private void Initialize()
         {
-            _view.onShowHideGamePauseButtonClick += delegate { _gameManager.ShowHideGamePause(); };
+            _view.onShowHideGamePauseButtonClick += delegate
+            {
+                _gameManager.IsPauseActive = false;
+            };
 
             _view.onGoToMenuButtonClick += delegate
             {
-                _gameManager.ShowHideGamePause();
+                _gameManager.IsPauseActive = false;
                 _sceneFader.FadeTo(_menuSceneName);
             };
 
             _view.onRetryLevelButtonClick += delegate
             {
-                _gameManager.ShowHideGamePause();
+                _gameManager.IsPauseActive = false;
                 _sceneFader.FadeTo(SceneManager.GetActiveScene().name);
             };
+        }
+        
+        public void ShowHideGamePause(bool isActive)
+        {
+            _view.GetGameObject().SetActive(isActive);    
         }
     }
 
@@ -47,5 +56,7 @@ namespace ScreenPresenters
         event Action onShowHideGamePauseButtonClick;
         event Action onGoToMenuButtonClick;
         event Action onRetryLevelButtonClick;
+
+        GameObject GetGameObject();
     }
 }

@@ -1,23 +1,39 @@
+using System;
+using ScreenPresenters;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverUI;
-    [SerializeField] private GameObject gamePauseUI;
+    
     [SerializeField] private string nextLevel = "Level02";
     [SerializeField] private int levelToUnlock = 2;
     [SerializeField] private SceneFader sceneFader;
 
     public static bool gameIsOver;
-
-    public bool isPauseActive
+    
+    private bool isPauseActive = false;
+    private PauseMenuScreenPresenter _pauseMenuScreenPresenter;
+    public bool IsPauseActive
     {
-        private set { }
-        get => ShowHideGamePause();
+        set
+        {
+            isPauseActive = value;
+            Time.timeScale = isPauseActive ? 0f : 1f;
+            _pauseMenuScreenPresenter.ShowHideGamePause(isPauseActive);
+        }
+
+        get => isPauseActive;
+    }
+
+    public void Initialize(PauseMenuScreenPresenter pauseMenuScreenPresenter)
+    {
+        _pauseMenuScreenPresenter = pauseMenuScreenPresenter;
     }
 
     private void Start()
     {
+        IsPauseActive = false;
         gameIsOver = false;
     }
 
@@ -33,7 +49,7 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
-            ShowHideGamePause();
+            IsPauseActive = !IsPauseActive;
         }
 
         if (PlayerStats.instance.PlayerLives <= 0)
@@ -54,15 +70,5 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("levelReached", levelToUnlock);
         PlayerPrefs.Save();
         sceneFader.FadeTo(nextLevel);
-    }
-    
-    public bool ShowHideGamePause()
-    {
-        bool isShow = !gamePauseUI.activeSelf;
-        
-        gamePauseUI.SetActive(isShow);
-        Time.timeScale = isShow ? 0f : 1f;
-
-        return isShow;
     }
 }

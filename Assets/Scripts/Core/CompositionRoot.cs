@@ -18,6 +18,8 @@ namespace Core
             _sceneFader = FindObjectOfType<SceneFader>();
             _gameOverScreenPresenter = new GameOverScreenPresenter(gameOverScreenView, _sceneFader);
             _pauseMenuScreenPresenter = new PauseMenuScreenPresenter(pauseMenuScreenView, _sceneFader, gameManager);
+            
+            gameManager.Initialize(_pauseMenuScreenPresenter);
         }
     }
 }

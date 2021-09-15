@@ -21,4 +21,9 @@ public class PauseMenuScreenView : MonoBehaviour, IPauseMenuScreenView
 
         goToMenuButton.onClick.AddListener(delegate { onGoToMenuButtonClick?.Invoke(); });
     }
+    
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
 }
