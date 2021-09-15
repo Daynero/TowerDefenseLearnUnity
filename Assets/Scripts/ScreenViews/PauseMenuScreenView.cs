@@ -1,28 +1,24 @@
 using System;
 using ScreenPresenters;
-using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GameOverScreenView : MonoBehaviour, IGameOverScreenView
+public class PauseMenuScreenView : MonoBehaviour, IPauseMenuScreenView
 {
-    [SerializeField] private TMP_Text roundsText;
+    [SerializeField] private Button showHideGamePauseButton;
     [SerializeField] private Button retryLevelButton;
     [SerializeField] private Button goToMenuButton;
-    
+
     public event Action onRetryLevelButtonClick;
     public event Action onGoToMenuButtonClick;
-
-    private void OnEnable()
-    {
-        roundsText.text = PlayerStats.instance.Rounds.ToString();
-    }
+    public event Action onShowHideGamePauseButtonClick;
 
     private void Start()
     {
+        showHideGamePauseButton.onClick.AddListener(delegate { onShowHideGamePauseButtonClick?.Invoke(); });
+
         retryLevelButton.onClick.AddListener(delegate { onRetryLevelButtonClick?.Invoke(); });
+
         goToMenuButton.onClick.AddListener(delegate { onGoToMenuButtonClick?.Invoke(); });
     }
-
-    
 }

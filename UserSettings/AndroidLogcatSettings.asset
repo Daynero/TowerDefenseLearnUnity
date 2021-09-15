@@ -16,230 +16,38 @@
         },
         {
             "deviceId": "1489ecfc",
-            "name": "com.ageofeternity.global",
-            "processId": 31732,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 5460,
-            "exited": true
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 7469,
-            "exited": true
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 7969,
-            "exited": true
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 8383,
-            "exited": true
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 8845,
-            "exited": true
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 14772,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 15257,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 15677,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 16014,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 16599,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 17190,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 19976,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 20399,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 20882,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 21237,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 21783,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 22181,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 22403,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 23353,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 23720,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 24216,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 24479,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 27339,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 31224,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 31717,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 2338,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 4540,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 4788,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 5601,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 6287,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 6598,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
-            "name": "com.DefaultCompany.TowerDefense",
-            "processId": 6885,
-            "exited": false
-        },
-        {
-            "deviceId": "1489ecfc",
             "name": "com.DefaultCompany.TowerDefense",
             "processId": 7644,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1489ecfc",
             "name": "com.DefaultCompany.TowerDefense",
             "processId": 8642,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1489ecfc",
             "name": "com.DefaultCompany.TowerDefense",
             "processId": 8937,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1489ecfc",
             "name": "com.DefaultCompany.TowerDefense",
             "processId": 9260,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "1489ecfc",
             "name": "com.DefaultCompany.TowerDefense",
             "processId": 10278,
+            "exited": true
+        },
+        {
+            "deviceId": "1489ecfc",
+            "name": "com.ageofeternity.global",
+            "processId": 19374,
             "exited": false
         }
     ],

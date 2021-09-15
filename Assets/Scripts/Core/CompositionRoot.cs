@@ -5,14 +5,19 @@ namespace Core
 {
     public class CompositionRoot : MonoBehaviour
     {
-        private SceneFader _sceneFader;
-        [SerializeField] private GameOverScreenView _gameOverScreenView;
+        [SerializeField] private GameOverScreenView gameOverScreenView;
+        [SerializeField] private PauseMenuScreenView pauseMenuScreenView;
+        [SerializeField] private GameManager gameManager;
 
+        private SceneFader _sceneFader;
         private GameOverScreenPresenter _gameOverScreenPresenter;
+        private PauseMenuScreenPresenter _pauseMenuScreenPresenter;
+        
         private void Awake()
         {
             _sceneFader = FindObjectOfType<SceneFader>();
-            _gameOverScreenPresenter = new GameOverScreenPresenter(_gameOverScreenView, _sceneFader);
+            _gameOverScreenPresenter = new GameOverScreenPresenter(gameOverScreenView, _sceneFader);
+            _pauseMenuScreenPresenter = new PauseMenuScreenPresenter(pauseMenuScreenView, _sceneFader, gameManager);
         }
     }
 }

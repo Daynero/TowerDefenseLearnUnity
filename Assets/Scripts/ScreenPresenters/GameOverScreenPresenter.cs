@@ -1,3 +1,4 @@
+using Core;
 using System;
 using UnityEngine.SceneManagement;
 
@@ -8,20 +9,21 @@ namespace ScreenPresenters
         private IGameOverScreenView _view;
         private SceneFader _sceneFader;
         
-        private string menuSceneName = "MainMenu";
+        private readonly string _menuSceneName = ConstantData.menuSceneName;
         public GameOverScreenPresenter(
-            GameOverScreenView view,
+            IGameOverScreenView view,
             SceneFader sceneFader)
         {
             _view = view;
             _sceneFader = sceneFader;
+           
             Initialize();
         }
 
         private void Initialize()
         {
             _view.onRetryLevelButtonClick += delegate { _sceneFader.FadeTo(SceneManager.GetActiveScene().name); };
-            _view.onGoToMenuButtonClick += delegate { _sceneFader.FadeTo(menuSceneName); };
+            _view.onGoToMenuButtonClick += delegate { _sceneFader.FadeTo(_menuSceneName); };
         }
     }
 
