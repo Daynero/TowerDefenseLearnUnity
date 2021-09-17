@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float speed;
     public float startSpeed = 10f;
 
-    public void Init(Action EnemyPathEnded, Action<int> EnemyDie)
+    public void Initialize(Action EnemyPathEnded, Action<int> EnemyDie)
     {
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemyMovement.EndPath = () => 

@@ -8,18 +8,16 @@ namespace ScreenPresenters
     {
         private IGameOverScreenView _view;
         private SceneFader _sceneFader;
-        private GameManager _gameManager;
-        
+
         private readonly string _menuSceneName = ConstantData.menuSceneName;
         public GameOverScreenPresenter(
             IGameOverScreenView view,
-            SceneFader sceneFader, 
-            GameManager gameManager)
+            SceneFader sceneFader 
+            )
         {
             _view = view;
             _sceneFader = sceneFader;
-            _gameManager = gameManager;
-           
+
             Initialize();
         }
 

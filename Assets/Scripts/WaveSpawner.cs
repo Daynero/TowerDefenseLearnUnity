@@ -67,6 +67,6 @@ public class WaveSpawner : MonoBehaviour
     private void SpawnEnemy(Enemy enemyPrefab)
     {
         Enemy enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        enemy.Init(EnemyPathEnded, EnemyDie);
+        enemy.Initialize(EnemyPathEnded, EnemyDie);
     }
 }
