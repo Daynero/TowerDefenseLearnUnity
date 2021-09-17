@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -10,14 +11,18 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private TMP_Text waveCountdownText;
     [SerializeField] private GameManager gameManager;
 
+    private Enemy _enemyPrefab;
     private float countdown = 2f;
     private int waveIndex;
+    private int enemiesAlive;
 
-    public static int EnemiesAlive;
-
+    public event Action RoundsUpdateNotify;
+    public Action EnemyPathEnded;
+    public Action<int> EnemyDie;
+    
     private void Update()
     {
-        if (EnemiesAlive > 0)
+        if (enemiesAlive > 0)
         {
             return;
         }
@@ -38,11 +43,11 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        PlayerStats.instance.Rounds++;
+        RoundsUpdateNotify?.Invoke();
 
         Wave wave = waves[waveIndex];
 
-        EnemiesAlive = wave.count;
+        enemiesAlive = wave.count;
 
         for (int i = 0; i < wave.count; i++)
         {
@@ -59,8 +64,9 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(GameObject enemy)
+    private void SpawnEnemy(Enemy enemyPrefab)
     {
-        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+        Enemy enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        enemy.Init(EnemyPathEnded, EnemyDie);
     }
 }

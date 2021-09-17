@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public struct Wave
 {
-    public GameObject enemy;
+    public Enemy enemy;
     public int count;
     public float rate;
 }

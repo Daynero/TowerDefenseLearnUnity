@@ -7,10 +7,11 @@ public class BuildManager : MonoBehaviour
 
     private TurretBlueprint turretToBuild;
     private Node selectedNode;
+    private GameManager _gameManager;
 
     public GameObject buildEffect;
     public GameObject sellEffect;
-    public static BuildManager instance;
+    // public static BuildManager instance;
 
     public bool CanBuild
     {
@@ -19,19 +20,24 @@ public class BuildManager : MonoBehaviour
 
     public bool HasMoney
     {
-        get { return PlayerStats.instance.PlayerMoney >= turretToBuild.cost; }
+        get { return _gameManager.PlayerMoney >= turretToBuild.cost; }
     }
 
-    private void Awake()
+    public BuildManager(GameManager gameManager)
     {
-        if (instance != null)
-        {
-            Debug.Log("More than one BuildManager in the scene!");
-            return;
-        }
-
-        instance = this;
+        _gameManager = gameManager;
     }
+
+    // private void Awake()
+    // {
+    //     if (instance != null)
+    //     {
+    //         Debug.Log("More than one BuildManager in the scene!");
+    //         return;
+    //     }
+    //
+    //     instance = this;
+    // }
 
     public void SelectNode(Node node)
     {

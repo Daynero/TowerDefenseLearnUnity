@@ -1,49 +1,44 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
 public class EnemyMovement : MonoBehaviour
 {
-    private Transform target;
-    private int wavepointIndex = 0;
-
-    private Enemy enemy;
+    private Transform _target;
+    private int _wavepointIndex;
+    private Enemy _enemy;
+    
+    public Action EndPath;
 
     private void Start()
     {
-        enemy = GetComponent<Enemy>();
+        _enemy = GetComponent<Enemy>();
 
-        target = Waypoints.points[0];
+        _target = Waypoints.points[0];
     }
 
     private void Update()
     {
-        Vector3 dir = target.position - transform.position;
-        transform.Translate(dir.normalized * enemy.speed * Time.deltaTime);
+        Vector3 dir = _target.position - transform.position;
+        transform.Translate(dir.normalized * _enemy.speed * Time.deltaTime);
 
-        if (Vector3.Distance(target.position, transform.position) <= 0.4f)
+        if (Vector3.Distance(_target.position, transform.position) <= 0.4f)
         {
             GetNextWavepoints();
         }
 
-        enemy.speed = enemy.startSpeed;
+        _enemy.speed = _enemy.startSpeed;
     }
 
     private void GetNextWavepoints()
     {
-        if (wavepointIndex >= Waypoints.points.Length - 1)
+        if (_wavepointIndex >= Waypoints.points.Length - 1)
         {
-            EndPath();
+            EndPath.Invoke();
             return;
         }
 
-        wavepointIndex++;
-        target = Waypoints.points[wavepointIndex];
-    }
-
-    private void EndPath()
-    {
-        PlayerStats.instance.PlayerLives--;
-        WaveSpawner.EnemiesAlive--;
-        Destroy(gameObject);
+        _wavepointIndex++;
+        _target = Waypoints.points[_wavepointIndex];
     }
 }

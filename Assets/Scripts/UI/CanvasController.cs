@@ -6,12 +6,23 @@ public class CanvasController : MonoBehaviour
     [SerializeField] private TMP_Text moneyText;
     [SerializeField] private TMP_Text livesText;
     
-    private Enemy enemy;  
+    private GameManager _gameManager;
+
+    public CanvasController(GameManager gameManager)
+    {
+        _gameManager = gameManager;
+    }
+    
     private void Start()
     {
-        PlayerStats.instance.MoneyUpdateNotify += DisplayMoney;
-        PlayerStats.instance.LivesUpdateNotify += DisplayLives;
+        _gameManager.MoneyUpdateNotify += DisplayMoney;
+        _gameManager.LivesUpdateNotify += DisplayLives;
     }
+
+    public void Init()
+    {
+        
+    } 
 
     private void DisplayMoney(int money)
     {
