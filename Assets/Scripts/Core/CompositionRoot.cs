@@ -1,3 +1,4 @@
+using Data;
 using ScreenPresenters;
 using ScreenViews;
 using UnityEngine;
@@ -10,22 +11,25 @@ namespace Core
         [SerializeField] private PauseMenuScreenView pauseMenuScreenView;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private WaveSpawner waveSpawner; 
-        [SerializeField] private CanvasScreenView canvasScreenView;
-        // [SerializeField] private BuildManager buildManager;
+        [SerializeField] private BuildManager buildManager; 
+        [SerializeField] private MainGameScreenView mainGameScreenView;
+        [SerializeField] private TurretInfoSO turretInfoSo;
+        [SerializeField] private Node node;
 
         private SceneFader _sceneFader;
         private GameOverScreenPresenter _gameOverScreenPresenter;
         private PauseMenuScreenPresenter _pauseMenuScreenPresenter;
-        private CanvasScreenPresenter _canvasScreenPresenter;
+        private MainGameScreenPresenter _mainGameScreenPresenter;
 
         private void Awake()
         {
             _sceneFader = FindObjectOfType<SceneFader>();
             _gameOverScreenPresenter = new GameOverScreenPresenter(gameOverScreenView, _sceneFader);
             _pauseMenuScreenPresenter = new PauseMenuScreenPresenter(pauseMenuScreenView, _sceneFader, gameManager);
-            _canvasScreenPresenter = new CanvasScreenPresenter(gameManager, canvasScreenView);
+            _mainGameScreenPresenter = new MainGameScreenPresenter(gameManager, mainGameScreenView);
             
-            gameManager.Initialize(_pauseMenuScreenPresenter, _gameOverScreenPresenter, waveSpawner);
+            gameManager.Initialize(_pauseMenuScreenPresenter, _gameOverScreenPresenter, waveSpawner, buildManager);
+            buildManager.Initialize(node, turretInfoSo);
         }
     }
 }

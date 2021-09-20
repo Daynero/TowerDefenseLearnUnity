@@ -1,22 +1,24 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Node : MonoBehaviour
 {
-    public Action onMouseUpButton;
-    public Action onMouseExitButton;
+    public Action <Node> ONMouseUpButton;
+    public Action <Node> ONMouseExitButton;
+    public Renderer rend;
+
+    private void Start()
+    {
+        rend = new Renderer();
+    }
 
     public void OnMouseUp()
     {
-        onMouseUpButton.Invoke();
+        ONMouseUpButton.Invoke(this);
     }
 
     public void OnMouseExit()
     {
-        onMouseExitButton.Invoke();
+        ONMouseExitButton.Invoke(this);
     }
-    
-    // Из Node в buildManager нужно передавать какой node сейчас выбран
-
 }

@@ -1,0 +1,39 @@
+using System;
+using ScreenViews;
+
+namespace ScreenPresenters
+{
+    public class MainGameScreenPresenter
+    {
+        private GameManager _gameManager;
+        private IMainGameScreenView _mainGameScreenView;
+        private BuildManager _buildManager;
+        
+        public MainGameScreenPresenter(GameManager gameManager,
+            IMainGameScreenView mainGameScreenView)
+        {
+            _gameManager = gameManager;
+            _mainGameScreenView = mainGameScreenView;
+
+            Initialize();
+        }
+        
+        public void Initialize()
+        {
+            _gameManager.MoneyUpdateNotify += _mainGameScreenView.DisplayMoney;
+            _gameManager.LivesUpdateNotify += _mainGameScreenView.DisplayLives;
+            
+            _mainGameScreenView.OnTurretSelect += delegate(TurretType type)
+            {
+                _buildManager.SelectTurretToBuild(type);
+            };
+        }
+    }
+
+    public interface IMainGameScreenView
+    {
+        public event Action<TurretType> OnTurretSelect;
+        public void DisplayMoney(int money);
+        public void DisplayLives(int lives);
+    }
+}

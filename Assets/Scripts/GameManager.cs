@@ -12,57 +12,87 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int startLives = 20;
 
     private string nextLevel = ConstantData.Level2;
-    private int playerMoney;
-    private int playerLives;
-    private int rounds;
-    private bool isPauseActive = false;
+    private int _playerMoney;
+    private int _playerLives;
+    private int _rounds;
+    private bool _isPauseActive = false;
     private PauseMenuScreenPresenter _pauseMenuScreenPresenter;
     private GameOverScreenPresenter _gameOverScreenPresenter;
     private WaveSpawner _waveSpawner;
+    private BuildManager _buildManager;
 
-    public static bool gameIsOver;
+    public static bool GameIsOver;
     
     public event Action<int> MoneyUpdateNotify;
     public event Action<int> LivesUpdateNotify;
 
     public int Rounds
     {
-        private set => rounds = value;
-        get => rounds;
+        private set => _rounds = value;
+        get => _rounds;
     }
     
     public int PlayerMoney
     {
-        get => playerMoney;
+        get => _playerMoney;
         set
         {
-            playerMoney = value;
-            MoneyUpdateNotify?.Invoke(playerMoney);
+            _playerMoney = value;
+            MoneyUpdateNotify?.Invoke(_playerMoney);
         }
     }
 
     private int PlayerLives
     {
-        get => playerLives;
+        get => _playerLives;
         set
         {
-            playerLives = value;
-            LivesUpdateNotify?.Invoke(playerLives);
+            _playerLives = value;
+            LivesUpdateNotify?.Invoke(_playerLives);
         }
     }
     
     public void Initialize(PauseMenuScreenPresenter pauseMenuScreenPresenter,
                             GameOverScreenPresenter gameOverScreenPresenter,
-                            WaveSpawner waveSpawner)
+                            WaveSpawner waveSpawner, BuildManager buildManager)
     {
         _pauseMenuScreenPresenter = pauseMenuScreenPresenter;
         _gameOverScreenPresenter = gameOverScreenPresenter;
         _waveSpawner = waveSpawner;
+        _buildManager = buildManager;
         
         _waveSpawner.EnemyDie = delegate(int enemyCost)
         {
             PlayerMoney += enemyCost;
         };
+        
+        _buildManager.SellTurretAction = delegate(int salesMoney)
+        {
+            PlayerMoney += salesMoney;
+        };
+        
+        _buildManager.BuildTurretAction = delegate(int turretCost)
+        {
+            if (PlayerMoney < turretCost)
+            {
+                Debug.Log("Not enough money to build that!");
+                return;
+            }
+
+            PlayerMoney -= turretCost;
+        };
+        
+        _buildManager.UpgradeTurretAction = delegate(int upgradeCost)
+        {
+            if (PlayerMoney < upgradeCost)
+            {
+                Debug.Log("Not enough money to upgrade that!");
+                return;
+            }
+
+            PlayerMoney -= upgradeCost;
+        };
+        
         _waveSpawner.EnemyPathEnded = delegate { PlayerLives--; };
     }
 
@@ -75,12 +105,12 @@ public class GameManager : MonoBehaviour
 
         Rounds = 0;
         IsPauseActive = false;
-        gameIsOver = false;
+        GameIsOver = false;
     }
 
     private void Update()
     {
-        if (gameIsOver)
+        if (GameIsOver)
             return;
 
         if (Input.GetKeyDown("e"))
@@ -103,23 +133,23 @@ public class GameManager : MonoBehaviour
     {
         set
         {
-            isPauseActive = value;
-            Time.timeScale = isPauseActive ? 0f : 1f;
-            _pauseMenuScreenPresenter.ShowHideGamePause(isPauseActive);
+            _isPauseActive = value;
+            Time.timeScale = _isPauseActive ? 0f : 1f;
+            _pauseMenuScreenPresenter.ShowHideGamePause(_isPauseActive);
         }
 
-        get => isPauseActive;
+        get => _isPauseActive;
     }
 
     private void UpdateRounds()
     {
-        rounds++;
-        _gameOverScreenPresenter.SetRoundsCount(rounds);
+        _rounds++;
+        _gameOverScreenPresenter.SetRoundsCount(_rounds);
     }
 
     private void EndGame()
     {
-        gameIsOver = true;
+        GameIsOver = true;
         gameOverUI.SetActive(true);
     }
 

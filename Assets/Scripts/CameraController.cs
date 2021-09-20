@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.gameIsOver)
+        if (GameManager.GameIsOver)
         {
             enabled = false;
             return;
