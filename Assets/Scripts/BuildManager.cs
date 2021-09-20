@@ -1,9 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
+using UnityEngine.UI;
+using System.Collections;
 
 public enum TurretType
 {
@@ -14,22 +16,32 @@ public enum TurretType
 
 public class BuildManager : MonoBehaviour
 {
-    [SerializeField] private NodeUI nodeUI;
+    // [SerializeField] private NodeUI nodeUI;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private Color hoverColor;
     [SerializeField] private Color notEnoughMoneyColor;
     [SerializeField] private Vector3 positionOffset;
+    
+    [SerializeField] private TMP_Text upgradeCost;
+    [SerializeField] private Button upgradeButton;
+    [SerializeField] private TMP_Text sellAmount;
+    [SerializeField] private float appearPopUpSpeed;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private GameObject nodeCanvasUI;
 
     private TurretBlueprint _turretToBuild;
     private Node _node;
     private Node _selectedNode;
-    private GameManager _gameManager;
+    private readonly GameManager _gameManager;
     private Renderer _rend;
     private Color _startColor;
     private GameObject _turret;
-    private bool _isUpgrade; // Todo: Она где-то тягалась еще
+    private bool _isUpgrade; 
     private TurretBlueprint _turretBlueprint;
     private TurretInfoSO _turretInfoSo;
+    private float _popUpAlpha;
+    
+    private bool CanShowPopUp => !cameraController.isDragging && !cameraController.isZooming;
 
     public Action<int> SellTurretAction;
     public Action<int> BuildTurretAction;
@@ -37,6 +49,7 @@ public class BuildManager : MonoBehaviour
 
     public GameObject buildEffect;
     public GameObject sellEffect;
+    
 
     public bool CanBuild => (_turretToBuild != null && !cameraController.isDragging && !cameraController.isZooming);
 
@@ -49,9 +62,9 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
-        _rend = GetComponent<Renderer>();
+        _rend = _selectedNode.GetComponent<Renderer>();
         _startColor = _rend.material.color;
-        
+
         _node.ONMouseUpButton += ClickOnNode;
         _node.ONMouseExitButton += ResetNodeColor;
     }
@@ -61,7 +74,7 @@ public class BuildManager : MonoBehaviour
         currentNode.rend.material.color = _startColor;
     }
 
-    public void Initialize (Node node, TurretInfoSO turretInfoSo)
+    public void Initialize(Node node, TurretInfoSO turretInfoSo)
     {
         _node = node;
         _turretInfoSo = turretInfoSo;
@@ -78,20 +91,20 @@ public class BuildManager : MonoBehaviour
         _selectedNode = currentNode;
         _turretToBuild = null;
 
-        nodeUI.SetTarget(currentNode);
+        SetTarget(currentNode);
     }
 
     private void DeselectNode()
     {
         _selectedNode = null;
-        nodeUI.HidePopUpMenu();
+        HidePopUpMenu();
     }
-    
+
     public void SellTurret()
     {
         SellTurretAction.Invoke(_turretBlueprint.GetSellAmount());
 
-        GameObject effect = (GameObject) Instantiate(sellEffect, GetBuildPosition(), Quaternion.identity);
+        GameObject effect = Instantiate(sellEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
 
         Destroy(_turret);
@@ -101,10 +114,11 @@ public class BuildManager : MonoBehaviour
     public void SelectTurretToBuild(TurretType turretType)
     {
         _turretToBuild = _turretInfoSo.turretArray.First(someTurret => someTurret.type == turretType);
+        Debug.Log("Selected turret type: " + _turretToBuild.type);
         DeselectNode();
     }
 
-    public TurretBlueprint GetTurretToBuild()
+    private TurretBlueprint GetTurretToBuild()
     {
         return _turretToBuild;
     }
@@ -112,7 +126,7 @@ public class BuildManager : MonoBehaviour
     private void ClickOnNode(Node currentNode)
     {
         IndicateCanBuild();
-            
+
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -127,30 +141,32 @@ public class BuildManager : MonoBehaviour
 
         BuildTurret(GetTurretToBuild());
     }
-    
+
     private void BuildTurret(TurretBlueprint blueprint)
     {
         BuildTurretAction.Invoke(blueprint.cost);
 
-        GameObject _turret = (GameObject) Instantiate(blueprint.prefab, GetBuildPosition(), Quaternion.identity);
-        this._turret = _turret;
+        GameObject turret = Instantiate(blueprint.prefab, GetBuildPosition(), Quaternion.identity);
+        _turret = turret;
 
         _turretBlueprint = blueprint;
 
-        GameObject effect = (GameObject) Instantiate(buildEffect, GetBuildPosition(), Quaternion.identity);
+        GameObject effect = Instantiate(buildEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
     }
-    
+
     public void UpgradeTurret()
     {
         UpgradeTurretAction.Invoke(_turretBlueprint.upgradeCost);
 
-        Destroy(this._turret);
-        
-        GameObject _turret = (GameObject) Instantiate(_turretBlueprint.upgradedPrefab, GetBuildPosition(), Quaternion.identity);
-        this._turret = _turret;
+        Destroy(_turret);
 
-        GameObject effect = (GameObject) Instantiate(buildEffect, GetBuildPosition(), Quaternion.identity);
+        GameObject turret = Instantiate(_turretBlueprint.upgradedPrefab,
+            GetBuildPosition(), Quaternion.identity);
+        
+        _turret = turret;
+
+        GameObject effect = Instantiate(buildEffect, GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 5f);
 
         _isUpgrade = true;
@@ -158,11 +174,57 @@ public class BuildManager : MonoBehaviour
         Debug.Log("Turret upgraded");
     }
 
-    private Vector3 GetBuildPosition()
+    public Vector3 GetBuildPosition()
     {
         return transform.position + positionOffset;
     }
     
+    public void SetTarget(Node target)
+    {
+        if (!CanShowPopUp)
+        {
+            return;
+        }
+        
+        _selectedNode = target;
+
+        transform.position = GetBuildPosition();
+
+        if (!_isUpgrade)
+        {
+            upgradeCost.text = "$" + _turretBlueprint.upgradeCost;
+            upgradeButton.interactable = true;
+        } else
+        {
+            upgradeCost.text = "DONE";
+            upgradeButton.interactable = false;
+        }
+
+        sellAmount.text = "$" + _turretBlueprint.GetSellAmount();
+
+        nodeCanvasUI.SetActive(true);
+        _popUpAlpha = 0;
+        canvasGroup.alpha = 0;
+
+        StartCoroutine(AnimateAppear());
+    }
+    
+    private IEnumerator AnimateAppear()
+    {
+        while (canvasGroup.alpha < 1 && nodeCanvasUI.activeInHierarchy)
+        {
+            _popUpAlpha += appearPopUpSpeed * Time.deltaTime;
+            canvasGroup.alpha = _popUpAlpha;
+            
+            yield return null;
+        }
+    }
+    
+    public void  HidePopUpMenu ()
+    {
+        nodeCanvasUI.SetActive(false);
+    }
+
     private void IndicateCanBuild()
     {
         if (EventSystem.current.IsPointerOverGameObject())

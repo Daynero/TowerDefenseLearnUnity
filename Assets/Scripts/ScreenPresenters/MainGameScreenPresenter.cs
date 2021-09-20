@@ -10,10 +10,11 @@ namespace ScreenPresenters
         private BuildManager _buildManager;
         
         public MainGameScreenPresenter(GameManager gameManager,
-            IMainGameScreenView mainGameScreenView)
+            IMainGameScreenView mainGameScreenView, BuildManager buildManager)
         {
             _gameManager = gameManager;
             _mainGameScreenView = mainGameScreenView;
+            _buildManager = buildManager;
 
             Initialize();
         }

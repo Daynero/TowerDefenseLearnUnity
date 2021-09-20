@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public struct TurretBlueprint
+public class TurretBlueprint
 {
     public TurretType type;
     public GameObject prefab;

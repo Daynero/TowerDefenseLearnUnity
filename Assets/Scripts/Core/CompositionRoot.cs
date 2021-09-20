@@ -26,7 +26,7 @@ namespace Core
             _sceneFader = FindObjectOfType<SceneFader>();
             _gameOverScreenPresenter = new GameOverScreenPresenter(gameOverScreenView, _sceneFader);
             _pauseMenuScreenPresenter = new PauseMenuScreenPresenter(pauseMenuScreenView, _sceneFader, gameManager);
-            _mainGameScreenPresenter = new MainGameScreenPresenter(gameManager, mainGameScreenView);
+            _mainGameScreenPresenter = new MainGameScreenPresenter(gameManager, mainGameScreenView, buildManager);
             
             gameManager.Initialize(_pauseMenuScreenPresenter, _gameOverScreenPresenter, waveSpawner, buildManager);
             buildManager.Initialize(node, turretInfoSo);
