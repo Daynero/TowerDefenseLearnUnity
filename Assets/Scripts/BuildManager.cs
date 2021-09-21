@@ -46,6 +46,9 @@ public class BuildManager : MonoBehaviour
     public Action<int> SellTurretAction;
     public Action<int> BuildTurretAction;
     public Action<int> UpgradeTurretAction;
+    
+    public Action <Node> ONMouseUpButton;
+    public Action <Node> ONMouseExitButton;
 
     public GameObject buildEffect;
     public GameObject sellEffect;
@@ -62,15 +65,12 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
-        _rend = _selectedNode.GetComponent<Renderer>();
-        _startColor = _rend.material.color;
-
-        _node.ONMouseUpButton += ClickOnNode;
-        _node.ONMouseExitButton += ResetNodeColor;
+        
     }
 
-    private void ResetNodeColor(Node currentNode)
+    public void ResetNodeColor(Node currentNode)
     {
+        Debug.Log("reset node color");
         currentNode.rend.material.color = _startColor;
     }
 
@@ -78,6 +78,9 @@ public class BuildManager : MonoBehaviour
     {
         _node = node;
         _turretInfoSo = turretInfoSo;
+        
+        _node.OnMouseUpButton = ClickOnNode;
+        _node.OnMouseExitButton = ResetNodeColor;
     }
 
     private void SelectNode(Node currentNode)
@@ -114,7 +117,7 @@ public class BuildManager : MonoBehaviour
     public void SelectTurretToBuild(TurretType turretType)
     {
         _turretToBuild = _turretInfoSo.turretArray.First(someTurret => someTurret.type == turretType);
-        Debug.Log("Selected turret type: " + _turretToBuild.type);
+     
         DeselectNode();
     }
 
@@ -123,8 +126,12 @@ public class BuildManager : MonoBehaviour
         return _turretToBuild;
     }
 
-    private void ClickOnNode(Node currentNode)
+    public void ClickOnNode(Node currentNode)
     {
+        Debug.Log("click on node");
+        _rend = currentNode.GetComponent<Renderer>();
+        _startColor = _rend.material.color;
+        
         IndicateCanBuild();
 
         if (EventSystem.current.IsPointerOverGameObject())

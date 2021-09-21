@@ -30,6 +30,7 @@ namespace Core
             
             gameManager.Initialize(_pauseMenuScreenPresenter, _gameOverScreenPresenter, waveSpawner, buildManager);
             buildManager.Initialize(node, turretInfoSo);
+            node.Initialize(buildManager);
         }
     }
 }
