@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretArray:
   - type: 0
-    prefab: {fileID: 0}
-    upgradedPrefab: {fileID: 0}
-    upgradeCost: 0
-    cost: 0
-  - type: 0
-    prefab: {fileID: 0}
-    upgradedPrefab: {fileID: 0}
-    upgradeCost: 0
-    cost: 0
-  - type: 0
-    prefab: {fileID: 0}
-    upgradedPrefab: {fileID: 0}
-    upgradeCost: 0
-    cost: 0
+    prefab: {fileID: 609369124278764460, guid: 3e921065354cee0439605b6588f9d86e, type: 3}
+    upgradedPrefab: {fileID: 609369124278764460, guid: d20fed8da9f63a541a828a402a29df5e, type: 3}
+    upgradeCost: 80
+    cost: 100
+  - type: 1
+    prefab: {fileID: 5079946960927807044, guid: 77af449d12df69b45b02baf1ec74fa83, type: 3}
+    upgradedPrefab: {fileID: 5079946960927807044, guid: bfa642b760c192245ac28cad82157bb0, type: 3}
+    upgradeCost: 120
+    cost: 150
+  - type: 2
+    prefab: {fileID: 7416702564690020703, guid: a6398e0d96c6b4b4787c9c73b3c3ae36, type: 3}
+    upgradedPrefab: {fileID: 7416702564690020703, guid: 46f3eb4203fcf73429c3b26662a1ef88, type: 3}
+    upgradeCost: 150
+    cost: 200

@@ -28,7 +28,7 @@ namespace Core
             _mainGameScreenPresenter = new MainGameScreenPresenter(gameManager, mainGameScreenView, buildManager);
             
             gameManager.Initialize(_pauseMenuScreenPresenter, _gameOverScreenPresenter, waveSpawner, buildManager);
-            buildManager.Initialize(turretInfoSo);
+            buildManager.Initialize(turretInfoSo, gameManager);
         }
     }
 }
