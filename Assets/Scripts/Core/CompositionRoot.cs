@@ -14,7 +14,6 @@ namespace Core
         [SerializeField] private BuildManager buildManager; 
         [SerializeField] private MainGameScreenView mainGameScreenView;
         [SerializeField] private TurretInfoSO turretInfoSo;
-        [SerializeField] private Node node;
 
         private SceneFader _sceneFader;
         private GameOverScreenPresenter _gameOverScreenPresenter;
@@ -29,8 +28,7 @@ namespace Core
             _mainGameScreenPresenter = new MainGameScreenPresenter(gameManager, mainGameScreenView, buildManager);
             
             gameManager.Initialize(_pauseMenuScreenPresenter, _gameOverScreenPresenter, waveSpawner, buildManager);
-            buildManager.Initialize(node, turretInfoSo);
-            node.Initialize(buildManager);
+            buildManager.Initialize(turretInfoSo);
         }
     }
 }

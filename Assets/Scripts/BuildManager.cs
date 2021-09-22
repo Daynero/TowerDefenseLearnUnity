@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.PlayerLoop;
 
 public enum TurretType
 {
@@ -16,7 +17,6 @@ public enum TurretType
 
 public class BuildManager : MonoBehaviour
 {
-    // [SerializeField] private NodeUI nodeUI;
     [SerializeField] private CameraController cameraController;
     [SerializeField] private Color hoverColor;
     [SerializeField] private Color notEnoughMoneyColor;
@@ -30,7 +30,7 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private GameObject nodeCanvasUI;
 
     private TurretBlueprint _turretToBuild;
-    private Node _node;
+    private Node _nodePrefab;
     private Node _selectedNode;
     private readonly GameManager _gameManager;
     private Renderer _rend;
@@ -40,47 +40,44 @@ public class BuildManager : MonoBehaviour
     private TurretBlueprint _turretBlueprint;
     private TurretInfoSO _turretInfoSo;
     private float _popUpAlpha;
-    
+
     private bool CanShowPopUp => !cameraController.isDragging && !cameraController.isZooming;
 
     public Action<int> SellTurretAction;
     public Action<int> BuildTurretAction;
     public Action<int> UpgradeTurretAction;
-    
-    public Action <Node> ONMouseUpButton;
-    public Action <Node> ONMouseExitButton;
 
     public GameObject buildEffect;
     public GameObject sellEffect;
-    
+    private Node[] nodes;
 
-    public bool CanBuild => (_turretToBuild != null && !cameraController.isDragging && !cameraController.isZooming);
 
-    public bool HasMoney => _gameManager.PlayerMoney >= _turretToBuild.cost;
+    private bool CanBuild => (_turretToBuild != null && !cameraController.isDragging && !cameraController.isZooming);
+
+    private bool HasMoney => _gameManager.PlayerMoney >= _turretToBuild.cost;
 
     public BuildManager(GameManager gameManager)
     {
         _gameManager = gameManager;
     }
 
-    private void Start()
+    public void Initialize(Node nodePrefab, TurretInfoSO turretInfoSo)
     {
-        
+        _nodePrefab = nodePrefab;
+        _turretInfoSo = turretInfoSo;
+
+        nodes = FindObjectsOfType<Node>();
+
+        foreach (var node in nodes)
+        {
+            node.Initialize(ClickOnNode, ResetNodeColor);
+        }
     }
 
-    public void ResetNodeColor(Node currentNode)
+    private void ResetNodeColor(Node currentNode)
     {
         Debug.Log("reset node color");
         currentNode.rend.material.color = _startColor;
-    }
-
-    public void Initialize(Node node, TurretInfoSO turretInfoSo)
-    {
-        _node = node;
-        _turretInfoSo = turretInfoSo;
-        
-        _node.OnMouseUpButton = ClickOnNode;
-        _node.OnMouseExitButton = ResetNodeColor;
     }
 
     private void SelectNode(Node currentNode)
@@ -126,7 +123,7 @@ public class BuildManager : MonoBehaviour
         return _turretToBuild;
     }
 
-    public void ClickOnNode(Node currentNode)
+    private void ClickOnNode(Node currentNode)
     {
         Debug.Log("click on node");
         _rend = currentNode.GetComponent<Renderer>();
@@ -181,12 +178,12 @@ public class BuildManager : MonoBehaviour
         Debug.Log("Turret upgraded");
     }
 
-    public Vector3 GetBuildPosition()
+    private Vector3 GetBuildPosition()
     {
         return transform.position + positionOffset;
     }
-    
-    public void SetTarget(Node target)
+
+    private void SetTarget(Node target)
     {
         if (!CanShowPopUp)
         {
@@ -226,8 +223,8 @@ public class BuildManager : MonoBehaviour
             yield return null;
         }
     }
-    
-    public void  HidePopUpMenu ()
+
+    private void  HidePopUpMenu ()
     {
         nodeCanvasUI.SetActive(false);
     }

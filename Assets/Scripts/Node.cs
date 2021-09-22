@@ -4,31 +4,28 @@ using UnityEngine.PlayerLoop;
 
 public class Node : MonoBehaviour
 {
-    public Action <Node> OnMouseUpButton;
-    public Action <Node> OnMouseExitButton;
+    private Action <Node> _onMouseUpButton;
+    private Action <Node> _onMouseExitButton;
     public Renderer rend;
-    private BuildManager _buildManager;
 
+    public void Initialize(Action<Node> clickOnNode,Action<Node> resetNodeColor)
+    {
+        _onMouseUpButton = clickOnNode;
+        _onMouseExitButton = resetNodeColor;
+    }
     private void Start()
     {
         rend = new Renderer();
     }
 
-    public void Initialize (BuildManager buildManager)
-    {
-        _buildManager = buildManager;
-    }
-
     public void OnMouseUp()
     {
-        _buildManager.ClickOnNode(this);
-        // Debug.Log("Click on Node");
-        // OnMouseUpButton?.Invoke(this);
+       Debug.Log("Click on Node");
+       _onMouseUpButton?.Invoke(this);
     }
 
     public void OnMouseExit()
     {
-        _buildManager.ResetNodeColor(this);   
-        // OnMouseExitButton?.Invoke(this);
+        _onMouseExitButton?.Invoke(this);
     }
 }

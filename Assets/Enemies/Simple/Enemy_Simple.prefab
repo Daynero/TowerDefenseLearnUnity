@@ -286,13 +286,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd003675e75fcf46982d0fd6d22ff7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSpeed: 10
-  speed: 10
   startHealth: 100
-  health: 100
-  earnings: 50
   deathEffect: {fileID: 4221094425317297956, guid: c1189dd85e010824b9e69c437d436e53, type: 3}
   healthBar: {fileID: 176877882466585501}
+  _earnings: 15
+  speed: 10
+  startSpeed: 10
 --- !u!114 &1259280631013138237
 MonoBehaviour:
   m_ObjectHideFlags: 0
