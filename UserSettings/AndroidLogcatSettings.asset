@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "1489ecfc",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "1489ecfc",
+        "name": "com.DefaultCompany.TowerDefense",
+        "processId": 23814,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -48,6 +48,18 @@
             "deviceId": "1489ecfc",
             "name": "com.ageofeternity.global",
             "processId": 19374,
+            "exited": false
+        },
+        {
+            "deviceId": "1489ecfc",
+            "name": "com.DefaultCompany.TowerDefense",
+            "processId": 12939,
+            "exited": false
+        },
+        {
+            "deviceId": "1489ecfc",
+            "name": "com.DefaultCompany.TowerDefense",
+            "processId": 23814,
             "exited": false
         }
     ],

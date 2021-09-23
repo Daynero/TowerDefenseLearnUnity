@@ -19,7 +19,6 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Color hoverColor;
     [SerializeField] private Color notEnoughMoneyColor;
     [SerializeField] private Vector3 positionOffset;
-
     [SerializeField] private TMP_Text upgradeCost;
     [SerializeField] private Button upgradeTurretButton;
     [SerializeField] private Button sellTurretButton;
@@ -27,6 +26,8 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private float appearPopUpSpeed;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private GameObject nodeCanvasUI;
+    [SerializeField] private GameObject buildEffect;
+    [SerializeField] private GameObject sellEffect;
 
     private TurretBlueprint _turretToBuild;
     private Node _selectedNode;
@@ -43,14 +44,11 @@ public class BuildManager : MonoBehaviour
     public Action<int> BuildTurretAction;
     public Action<int> UpgradeTurretAction;
     public Action<TurretInfoSO> DisplayCurrentTurretPrice;
-
-    public GameObject buildEffect;
-    public GameObject sellEffect;
-
-
+    
     private bool CanBuild => _turretToBuild != null && !cameraController.isDragging && !cameraController.isZooming;
 
-    private bool HasMoney => _turretToBuild != null && _gameManager.PlayerMoney >= _turretToBuild.cost;
+    private bool HasMoneyToBuild => _turretToBuild != null && _gameManager.PlayerMoney >= _turretToBuild.cost;
+    private bool HasMoneyToUpgrade => _gameManager.PlayerMoney >= _selectedNode.TurretBluePrint.upgradeCost;
 
     public void Initialize(TurretInfoSO turretInfoSo, GameManager gameManager)
     {
@@ -79,10 +77,15 @@ public class BuildManager : MonoBehaviour
             return;
         }
 
+        if (_popUpPositionOnNode != _selectedNode)
+        {
+            HidePopUpMenu();
+        }
+
         if (!CanBuild)
             return;
 
-        if (!HasMoney)
+        if (!HasMoneyToBuild)
         {
             rend.material.color = notEnoughMoneyColor;
             return;
@@ -201,21 +204,25 @@ public class BuildManager : MonoBehaviour
 
     private void SellTurret()
     {
-        Debug.Log("sell turret");
         SellTurretAction.Invoke(_selectedNode.TurretBluePrint.GetSellAmount());
 
         GameObject effect = Instantiate(sellEffect, GetBuildPosition(_selectedNode), Quaternion.identity);
+        
         Destroy(effect, 5f);
 
-        Destroy(_selectedNode.AssignedTurret);
+        Destroy(_selectedNode.AssignedTurret.gameObject);
+        
         _selectedNode.TurretBluePrint = null;
+        _selectedNode.IsUpgrade = false;
 
         HidePopUpMenu();
     }
 
     private void UpgradeTurret()
     {
-        Debug.Log("upgraded turret");
+        if (!HasMoneyToUpgrade)
+            return;
+        
         UpgradeTurretAction.Invoke(_selectedNode.TurretBluePrint.upgradeCost);
 
         Destroy(_selectedNode.AssignedTurret.gameObject);
@@ -226,6 +233,7 @@ public class BuildManager : MonoBehaviour
         _selectedNode.AssignedTurret = turret;
 
         GameObject effect = Instantiate(buildEffect, GetBuildPosition(_selectedNode), Quaternion.identity);
+        
         Destroy(effect, 5f);
 
         _selectedNode.IsUpgrade = true;
