@@ -4,8 +4,8 @@ using UnityEngine;
 public class TurretBlueprint
 {
     public TurretType type;
-    public GameObject prefab;
-    public GameObject upgradedPrefab;
+    public Turret prefab;
+    public Turret upgradedPrefab;
     public int upgradeCost;
     public int cost;
 

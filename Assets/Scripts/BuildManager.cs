@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Data;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
@@ -22,7 +21,8 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Vector3 positionOffset;
 
     [SerializeField] private TMP_Text upgradeCost;
-    [SerializeField] private Button upgradeButton;
+    [SerializeField] private Button upgradeTurretButton;
+    [SerializeField] private Button sellTurretButton;
     [SerializeField] private TMP_Text sellAmount;
     [SerializeField] private float appearPopUpSpeed;
     [SerializeField] private CanvasGroup canvasGroup;
@@ -32,17 +32,18 @@ public class BuildManager : MonoBehaviour
     private Node _selectedNode;
     private GameManager _gameManager;
     private Color _startColor = Color.white;
-    private bool _isUpgrade;
     private TurretBlueprint _turretBlueprint;
     private TurretInfoSO _turretInfoSo;
     private float _popUpAlpha;
     private Node[] _nodes;
+    private Node _popUpPositionOnNode;
 
     private bool CanShowPopUp => !cameraController.isDragging && !cameraController.isZooming;
 
     public Action<int> SellTurretAction;
     public Action<int> BuildTurretAction;
     public Action<int> UpgradeTurretAction;
+    public Action<TurretInfoSO> DisplayCurrentTurretPrice;
 
     public GameObject buildEffect;
     public GameObject sellEffect;
@@ -56,6 +57,7 @@ public class BuildManager : MonoBehaviour
     {
         _turretInfoSo = turretInfoSo;
         _gameManager = gameManager;
+        DisplayCurrentTurretPrice?.Invoke(_turretInfoSo);
 
         _nodes = FindObjectsOfType<Node>();
 
@@ -63,18 +65,18 @@ public class BuildManager : MonoBehaviour
         {
             node.Initialize(ClickOnNode, ResetNodeColor);
         }
+        
+        upgradeTurretButton.onClick.AddListener(UpgradeTurret);
+        sellTurretButton.onClick.AddListener(SellTurret);
     }
 
     private void ClickOnNode(Node currentNode, Renderer rend)
     {
-        // if (EventSystem.current.IsPointerOverGameObject())
-        //     return;
+        _selectedNode = currentNode;
 
-        if (currentNode.AssignedTurret != null)
+        if (_selectedNode.AssignedTurret != null)
         {
-            // todo: не с первого клика по турели вылазит попап
-            //_selectedNode = null;
-            SelectNode(currentNode);
+            SelectNodeWithTurret(_selectedNode);
             return;
         }
 
@@ -82,26 +84,25 @@ public class BuildManager : MonoBehaviour
             return;
 
         if (!HasMoney)
+        {
+            rend.material.color = notEnoughMoneyColor;
             return;
+        }
 
-        rend.material.color = HasMoney ? hoverColor : notEnoughMoneyColor;
-
-        _selectedNode = currentNode;
+        rend.material.color = hoverColor;
 
         BuildTurret(_turretToBuild);
     }
 
-    private void SelectNode(Node currentNode)
+    private void SelectNodeWithTurret(Node currentNode)
     {
-        if (_selectedNode == currentNode)
+        _turretToBuild = null;
+        
+        if (_popUpPositionOnNode == _selectedNode)
         {
-            Debug.Log("_selectedNode == currentNode");
-            DeselectNode();
+            HidePopUpMenu();
             return;
         }
-
-        //_selectedNode = currentNode;
-        _turretToBuild = null;
 
         SetTargetForNodeUI(currentNode);
     }
@@ -128,14 +129,13 @@ public class BuildManager : MonoBehaviour
 
     private void BuildTurret(TurretBlueprint blueprint)
     {
-        Debug.Log("create turret " + blueprint.prefab);
-        BuildTurretAction.Invoke(blueprint.cost);
+        _selectedNode.TurretBluePrint = blueprint;
+        
+        BuildTurretAction.Invoke(_selectedNode.TurretBluePrint.cost);
 
-        GameObject turret = Instantiate(blueprint.prefab, GetBuildPosition(_selectedNode), Quaternion.identity);
+        Turret turret = Instantiate(_selectedNode.TurretBluePrint.prefab, GetBuildPosition(_selectedNode), Quaternion.identity);
         _selectedNode.AssignedTurret = turret;
-
-        _turretBlueprint = blueprint;
-
+        
         GameObject effect = Instantiate(buildEffect, GetBuildPosition(_selectedNode), Quaternion.identity);
         Destroy(effect, 5f);
     }
@@ -156,25 +156,25 @@ public class BuildManager : MonoBehaviour
         Debug.Log("set target");
         if (!CanShowPopUp)
             return;
-        
-        _selectedNode = target;
 
-        nodeCanvasUI.transform.position = GetNodeUIPosition(_selectedNode);
+        nodeCanvasUI.transform.position = GetNodeUIPosition(target);
 
-        if (!_isUpgrade)
+        _popUpPositionOnNode = target;
+
+        if (!target.IsUpgrade)
         {
-            upgradeCost.text = "$" + _turretBlueprint.upgradeCost;
-            upgradeButton.interactable = true;
+            upgradeCost.text = "$" + _selectedNode.TurretBluePrint.upgradeCost;
+            upgradeTurretButton.interactable = true;
         }
         else
         {
             upgradeCost.text = "DONE";
-            upgradeButton.interactable = false;
+            upgradeTurretButton.interactable = false;
         }
 
         Debug.Log("set target end ");
 
-        sellAmount.text = "$" + _turretBlueprint.GetSellAmount();
+        sellAmount.text = "$" + _selectedNode.TurretBluePrint.GetSellAmount();
 
         nodeCanvasUI.SetActive(true);
         _popUpAlpha = 0;
@@ -185,7 +185,6 @@ public class BuildManager : MonoBehaviour
 
     private IEnumerator AnimateAppear()
     {
-        Debug.Log("AmimateAppear");
         while (canvasGroup.alpha < 1 && nodeCanvasUI.activeInHierarchy)
         {
             _popUpAlpha += appearPopUpSpeed * Time.deltaTime;
@@ -197,27 +196,32 @@ public class BuildManager : MonoBehaviour
 
     private void HidePopUpMenu()
     {
+        _popUpPositionOnNode = null;
         nodeCanvasUI.SetActive(false);
     }
 
-    public void SellTurret()
+    private void SellTurret()
     {
-        SellTurretAction.Invoke(_turretBlueprint.GetSellAmount());
+        Debug.Log("sell turret");
+        SellTurretAction.Invoke(_selectedNode.TurretBluePrint.GetSellAmount());
 
         GameObject effect = Instantiate(sellEffect, GetBuildPosition(_selectedNode), Quaternion.identity);
         Destroy(effect, 5f);
 
         Destroy(_selectedNode.AssignedTurret);
-        _turretBlueprint = null;
+        _selectedNode.TurretBluePrint = null;
+
+        HidePopUpMenu();
     }
 
-    public void UpgradeTurret()
+    private void UpgradeTurret()
     {
-        UpgradeTurretAction.Invoke(_turretBlueprint.upgradeCost);
+        Debug.Log("upgraded turret");
+        UpgradeTurretAction.Invoke(_selectedNode.TurretBluePrint.upgradeCost);
 
-        Destroy(_selectedNode.AssignedTurret);
+        Destroy(_selectedNode.AssignedTurret.gameObject);
 
-        GameObject turret = Instantiate(_turretBlueprint.upgradedPrefab,
+        Turret turret = Instantiate(_selectedNode.TurretBluePrint.upgradedPrefab,
             GetBuildPosition(_selectedNode), Quaternion.identity);
 
         _selectedNode.AssignedTurret = turret;
@@ -225,8 +229,8 @@ public class BuildManager : MonoBehaviour
         GameObject effect = Instantiate(buildEffect, GetBuildPosition(_selectedNode), Quaternion.identity);
         Destroy(effect, 5f);
 
-        _isUpgrade = true;
+        _selectedNode.IsUpgrade = true;
 
-        Debug.Log("Turret upgraded");
+        HidePopUpMenu();
     }
 }

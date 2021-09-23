@@ -3318,6 +3318,9 @@ MonoBehaviour:
   selectDefaultTurretButton: {fileID: 1807185275}
   selectMissileLauncherButton: {fileID: 981829734}
   selectLaserBeamerButton: {fileID: 1798057847}
+  currentDefaultTurretPrice: {fileID: 23554659}
+  currentMissileLauncherPrice: {fileID: 686243368}
+  currentLaserBeamerPrice: {fileID: 1340480096}
 --- !u!1001 &350996853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16955,7 +16958,7 @@ MonoBehaviour:
     count: 5
     rate: 3
   spawnPoint: {fileID: 1821727090}
-  timeBetweenWaves: 0
+  timeBetweenWaves: 2
   waveCountdownText: {fileID: 72818133}
   gameManager: {fileID: 1771767127}
 --- !u!4 &1771767124
@@ -16989,7 +16992,8 @@ MonoBehaviour:
   notEnoughMoneyColor: {r: 0.9056604, g: 0, b: 0, a: 0}
   positionOffset: {x: 3, y: 5, z: 0}
   upgradeCost: {fileID: 817979034}
-  upgradeButton: {fileID: 973616661}
+  upgradeTurretButton: {fileID: 973616661}
+  sellTurretButton: {fileID: 1963198879}
   sellAmount: {fileID: 179509067}
   appearPopUpSpeed: 4
   canvasGroup: {fileID: 218575819}
@@ -17770,7 +17774,6 @@ GameObject:
   - component: {fileID: 1808262777}
   - component: {fileID: 1808262779}
   - component: {fileID: 1808262778}
-  - component: {fileID: 1808262780}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -17834,18 +17837,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808262776}
   m_CullTransparentMesh: 1
---- !u!114 &1808262780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1808262776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c6541af64d53ae44984802ef56baa80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1814032785
 PrefabInstance:
   m_ObjectHideFlags: 0

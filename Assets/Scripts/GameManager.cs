@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         _waveSpawner.EnemyDie = delegate(int enemyCost)
         {
             PlayerMoney += enemyCost;
+            _waveSpawner.EnemiesAlive--;
         };
         
         _buildManager.SellTurretAction = delegate(int salesMoney)
@@ -93,12 +94,13 @@ public class GameManager : MonoBehaviour
             PlayerMoney -= upgradeCost;
         };
         
-        _waveSpawner.EnemyPathEnded = delegate { PlayerLives--; };
+        _waveSpawner.EnemyPathEnded += delegate { PlayerLives--; };
     }
 
     private void Start()
     {
         _waveSpawner.RoundsUpdateNotify += UpdateRounds;
+        
         
         PlayerMoney = startMoney;
         PlayerLives = startLives;

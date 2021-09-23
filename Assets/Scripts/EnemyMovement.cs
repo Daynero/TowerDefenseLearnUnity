@@ -34,7 +34,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_wavepointIndex >= Waypoints.points.Length - 1)
         {
-            EndPath.Invoke();
+            EndPath?.Invoke();
             return;
         }
 

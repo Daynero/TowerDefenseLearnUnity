@@ -11,43 +11,49 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private TMP_Text waveCountdownText;
     [SerializeField] private GameManager gameManager;
 
-    private Enemy _enemyPrefab;
-    private float countdown = 2f;
-    private int waveIndex;
-    private int enemiesAlive;
+    // private Enemy _enemyPrefab;
+    private float _countdown = 2f;
+    private int _waveIndex;
+
+    public int EnemiesAlive { get; set; }
 
     public event Action RoundsUpdateNotify;
     public Action EnemyPathEnded;
     public Action<int> EnemyDie;
-    
+
+    private void Start()
+    {
+        EnemyPathEnded += () => EnemiesAlive--;
+    }
+
     private void Update()
     {
-        if (enemiesAlive > 0)
+        if (EnemiesAlive > 0)
         {
             return;
         }
 
-        if (countdown <= 0f)
+        if (_countdown <= 0f)
         {
             StartCoroutine(SpawnWave());
-            countdown = timeBetweenWaves;
+            _countdown = timeBetweenWaves;
             return;
         }
 
-        countdown -= Time.deltaTime;
+        _countdown -= Time.deltaTime;
 
-        countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+        _countdown = Mathf.Clamp(_countdown, 0f, Mathf.Infinity);
 
-        waveCountdownText.text = string.Format("{0:00.00}", countdown);
+        waveCountdownText.text = string.Format("{0:00.00}", _countdown);
     }
 
     private IEnumerator SpawnWave()
     {
         RoundsUpdateNotify?.Invoke();
 
-        Wave wave = waves[waveIndex];
+        Wave wave = waves[_waveIndex];
 
-        enemiesAlive = wave.count;
+        EnemiesAlive = wave.count;
 
         for (int i = 0; i < wave.count; i++)
         {
@@ -55,9 +61,9 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(1f / wave.rate);
         }
 
-        waveIndex++;
+        _waveIndex++;
 
-        if (waveIndex == waves.Length)
+        if (_waveIndex == waves.Length)
         {
             gameManager.WinLevel();
             enabled = false;

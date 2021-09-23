@@ -1,18 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    [Header("General")] 
-    [SerializeField] private float range = 15f;
+    [Header("General")] [SerializeField] private float range = 15f;
 
-    [Header("Use Bullets (default)")] 
-    [SerializeField] private GameObject bulletPrefab;
+    [Header("Use Bullets (default)")] [SerializeField]
+    private GameObject bulletPrefab;
 
     [SerializeField] private float fireRate = 1f;
     private float fireCountdown = 0f;
 
-    [Header("Use Laser")] 
-    [SerializeField] private bool useLaser = false;
+    [Header("Use Laser")] [SerializeField] private bool useLaser = false;
 
     [SerializeField] private float damageOverTime = 30;
     [SerializeField] private float slowAmount = 0.5f;
@@ -21,8 +20,8 @@ public class Turret : MonoBehaviour
     [SerializeField] private ParticleSystem impactEffect;
     [SerializeField] private Light impactLight;
 
-    [Header("Unity Setup Fields")] 
-    [SerializeField] private string enemyTag = "Enemy";
+    [Header("Unity Setup Fields")] [SerializeField]
+    private string enemyTag = "Enemy";
 
     [SerializeField] private Transform partToRotate;
     [SerializeField] private float turnSpeed = 10f;
@@ -31,12 +30,12 @@ public class Turret : MonoBehaviour
 
     private Transform target;
     private Enemy targetEnemy;
-    
+
     private void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        StartCoroutine(UpdateTarget());
     }
-    
+
     private void Update()
     {
         if (target == null)
@@ -69,31 +68,36 @@ public class Turret : MonoBehaviour
         }
     }
 
-    public void UpdateTarget()
+    private IEnumerator UpdateTarget()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        foreach (GameObject enemy in enemies)
+        while (true)
         {
-            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+            float shortestDistance = Mathf.Infinity;
+            GameObject nearestEnemy = null;
 
-            if (distanceToEnemy < shortestDistance)
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
-            }
-        }
+                float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
-        if (nearestEnemy != null && shortestDistance <= range)
-        {
-            target = nearestEnemy.transform;
-            targetEnemy = nearestEnemy.GetComponent<Enemy>();
-        }
-        else
-        {
-            target = null;
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = enemy;
+                }
+            }
+
+            if (nearestEnemy != null && shortestDistance <= range)
+            {
+                target = nearestEnemy.transform;
+                targetEnemy = nearestEnemy.GetComponent<Enemy>();
+            }
+            else
+            {
+                target = null;
+            }
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
