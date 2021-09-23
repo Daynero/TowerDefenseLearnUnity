@@ -11,17 +11,17 @@ namespace ScreenViews
         [SerializeField] private Button retryLevelButton;
         [SerializeField] private Button goToMenuButton;
 
-        public event Action onRetryLevelButtonClick;
-        public event Action onGoToMenuButtonClick;
-        public event Action onShowHideGamePauseButtonClick;
+        public event Action OnRetryLevelButtonClick;
+        public event Action OnGoToMenuButtonClick;
+        public event Action OnShowHideGamePauseButtonClick;
 
         private void Start()
         {
-            showHideGamePauseButton.onClick.AddListener(delegate { onShowHideGamePauseButtonClick?.Invoke(); });
+            showHideGamePauseButton.onClick.AddListener(delegate { OnShowHideGamePauseButtonClick?.Invoke(); });
 
-            retryLevelButton.onClick.AddListener(delegate { onRetryLevelButtonClick?.Invoke(); });
+            retryLevelButton.onClick.AddListener(delegate { OnRetryLevelButtonClick?.Invoke(); });
 
-            goToMenuButton.onClick.AddListener(delegate { onGoToMenuButtonClick?.Invoke(); });
+            goToMenuButton.onClick.AddListener(delegate { OnGoToMenuButtonClick?.Invoke(); });
         }
     
         public GameObject GetGameObject()

@@ -31,8 +31,7 @@ public class BuildManager : MonoBehaviour
     private TurretBlueprint _turretToBuild;
     private Node _selectedNode;
     private GameManager _gameManager;
-    private Color _startColor = Color.white;
-    private TurretBlueprint _turretBlueprint;
+    private readonly Color _startColor = Color.white;
     private TurretInfoSO _turretInfoSo;
     private float _popUpAlpha;
     private Node[] _nodes;

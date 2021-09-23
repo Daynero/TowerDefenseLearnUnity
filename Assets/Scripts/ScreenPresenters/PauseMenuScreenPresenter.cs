@@ -7,11 +7,11 @@ namespace ScreenPresenters
 {
     public class PauseMenuScreenPresenter
     {
-        private IPauseMenuScreenView _view;
-        private SceneFader _sceneFader;
-        private GameManager _gameManager;
+        private readonly IPauseMenuScreenView _view;
+        private readonly SceneFader _sceneFader;
+        private readonly GameManager _gameManager;
 
-        private readonly string _menuSceneName = ConstantData.menuSceneName;
+        private readonly string _menuSceneName = ConstantData.MenuSceneName;
 
         public PauseMenuScreenPresenter(
             IPauseMenuScreenView view,
@@ -27,18 +27,18 @@ namespace ScreenPresenters
 
         private void Initialize()
         {
-            _view.onShowHideGamePauseButtonClick += delegate
+            _view.OnShowHideGamePauseButtonClick += delegate
             {
                 _gameManager.IsPauseActive = false;
             };
 
-            _view.onGoToMenuButtonClick += delegate
+            _view.OnGoToMenuButtonClick += delegate
             {
                 _gameManager.IsPauseActive = false;
                 _sceneFader.FadeTo(_menuSceneName);
             };
 
-            _view.onRetryLevelButtonClick += delegate
+            _view.OnRetryLevelButtonClick += delegate
             {
                 _gameManager.IsPauseActive = false;
                 _sceneFader.FadeTo(SceneManager.GetActiveScene().name);
@@ -53,9 +53,9 @@ namespace ScreenPresenters
 
     public interface IPauseMenuScreenView
     {
-        event Action onShowHideGamePauseButtonClick;
-        event Action onGoToMenuButtonClick;
-        event Action onRetryLevelButtonClick;
+        event Action OnShowHideGamePauseButtonClick;
+        event Action OnGoToMenuButtonClick;
+        event Action OnRetryLevelButtonClick;
 
         GameObject GetGameObject();
     }

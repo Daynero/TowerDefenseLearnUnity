@@ -8,16 +8,16 @@ public class SceneFader : MonoBehaviour
     [SerializeField] private Image img;
     [SerializeField] private AnimationCurve curve;
     
-    private static SceneFader instance;
+    private static SceneFader _instance;
     
     private void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this)
+        else if (_instance != this)
         {
             Destroy(gameObject);
         }

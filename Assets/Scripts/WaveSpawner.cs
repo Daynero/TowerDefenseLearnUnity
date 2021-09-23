@@ -10,8 +10,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private TMP_Text waveCountdownText;
     [SerializeField] private GameManager gameManager;
-
-    // private Enemy _enemyPrefab;
+    
     private float _countdown = 2f;
     private int _waveIndex;
 
@@ -44,7 +43,7 @@ public class WaveSpawner : MonoBehaviour
 
         _countdown = Mathf.Clamp(_countdown, 0f, Mathf.Infinity);
 
-        waveCountdownText.text = string.Format("{0:00.00}", _countdown);
+        waveCountdownText.text = $"{_countdown:00.00}";
     }
 
     private IEnumerator SpawnWave()

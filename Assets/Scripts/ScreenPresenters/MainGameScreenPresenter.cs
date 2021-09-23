@@ -1,14 +1,13 @@
 using System;
 using Data;
-using ScreenViews;
 
 namespace ScreenPresenters
 {
     public class MainGameScreenPresenter
     {
-        private GameManager _gameManager;
-        private IMainGameScreenView _mainGameScreenView;
-        private BuildManager _buildManager;
+        private readonly GameManager _gameManager;
+        private readonly IMainGameScreenView _mainGameScreenView;
+        private readonly BuildManager _buildManager;
 
         public MainGameScreenPresenter(GameManager gameManager,
             IMainGameScreenView mainGameScreenView, BuildManager buildManager)
@@ -19,8 +18,8 @@ namespace ScreenPresenters
 
             Initialize();
         }
-        
-        public void Initialize()
+
+        private void Initialize()
         {
             _gameManager.MoneyUpdateNotify += _mainGameScreenView.DisplayMoney;
             _gameManager.LivesUpdateNotify += _mainGameScreenView.DisplayLives;

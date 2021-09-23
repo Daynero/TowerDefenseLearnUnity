@@ -11,25 +11,25 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float pressingSpeed = 0.3f;
     [SerializeField] private Camera camera;
 
-    private float currentZBoundsLimit;
-    private float currentXBoundsLimit;
-    private float currentPanSpeed = 0.1f;
-    private Vector3 delta;
-    private Vector3 posStartCam;
-    private Vector3 initialTouchPosition;
-    private Vector3 initialCameraPosition;
-    private Vector3 initialTouch0Position;
-    private Vector3 initialTouch1Position;
-    private Vector3 initialMidPointScreen;
-    private float initialFieldOfView;
-    private float pressedTimer;
+    private float _currentZBoundsLimit;
+    private float _currentXBoundsLimit;
+    private float _currentPanSpeed = 0.1f;
+    private Vector3 _delta;
+    private Vector3 _posStartCam;
+    private Vector3 _initialTouchPosition;
+    private Vector3 _initialCameraPosition;
+    private Vector3 _initialTouch0Position;
+    private Vector3 _initialTouch1Position;
+    private Vector3 _initialMidPointScreen;
+    private float _initialFieldOfView;
+    private float _pressedTimer;
 
-    [HideInInspector] public bool isDragging = false;
-    [HideInInspector] public bool isZooming = false;
+    [HideInInspector] public bool isDragging;
+    [HideInInspector] public bool isZooming;
 
     private void Start()
     {
-        posStartCam = transform.position;
+        _posStartCam = transform.position;
     }
 
     private void Update()
@@ -43,30 +43,30 @@ public class CameraController : MonoBehaviour
         float fieldCamera = camera.fieldOfView;
 
         // Change PanSpeed proportionally FieldOfView
-        currentPanSpeed = (maxPanSpeed - minPanSpeed) * (fieldCamera - minFieldOfView)
+        _currentPanSpeed = (maxPanSpeed - minPanSpeed) * (fieldCamera - minFieldOfView)
             / (maxFieldOfView - minFieldOfView) + minPanSpeed;
 
         // Change limiting boundaries proportionally FieldOfView
-        currentXBoundsLimit = Mathf.Abs(fieldCamera - maxFieldOfView) * maxXBoundsLimit /
+        _currentXBoundsLimit = Mathf.Abs(fieldCamera - maxFieldOfView) * maxXBoundsLimit /
                               (maxFieldOfView - minFieldOfView);
-        currentZBoundsLimit = Mathf.Abs(fieldCamera - maxFieldOfView) * maxZBoundsLimit /
+        _currentZBoundsLimit = Mathf.Abs(fieldCamera - maxFieldOfView) * maxZBoundsLimit /
                               (maxFieldOfView - minFieldOfView);
 
         if (Input.touchCount == 1 || Input.touchCount == 2)
         {
-            pressedTimer += Time.deltaTime;
+            _pressedTimer += Time.deltaTime;
         }
         else
         {
-            pressedTimer = 0;
+            _pressedTimer = 0;
         }
 
-        if (Input.touchCount == 1 && pressedTimer >= pressingSpeed)
+        if (Input.touchCount == 1 && _pressedTimer >= pressingSpeed)
         {
             DragCamera();
         }
 
-        if (Input.touchCount == 2 && pressedTimer >= pressingSpeed)
+        if (Input.touchCount == 2 && _pressedTimer >= pressingSpeed)
         {
             ZoomAndDragCamera();
         }
@@ -84,18 +84,18 @@ public class CameraController : MonoBehaviour
         {
             if (!isDragging)
             {
-                initialTouchPosition = touch0.position;
-                initialCameraPosition = transform.position;
+                _initialTouchPosition = touch0.position;
+                _initialCameraPosition = transform.position;
 
                 isDragging = true;
             }
             else
             {
-                delta = (Vector3) touch0.position - initialTouchPosition;
-                Vector3 newPos = initialCameraPosition;
+                _delta = (Vector3) touch0.position - _initialTouchPosition;
+                Vector3 newPos = _initialCameraPosition;
 
-                newPos.z += delta.x * currentPanSpeed;
-                newPos.x -= delta.y * currentPanSpeed;
+                newPos.z += _delta.x * _currentPanSpeed;
+                newPos.x -= _delta.y * _currentPanSpeed;
 
                 transform.position = ClampNewCameraPosition(newPos);
             }
@@ -116,38 +116,38 @@ public class CameraController : MonoBehaviour
 
         if (!isZooming)
         {
-            initialTouch0Position = touch0.position;
-            initialTouch1Position = touch1.position;
-            initialCameraPosition = transform.position;
-            initialFieldOfView = camera.fieldOfView;
-            initialMidPointScreen = (touch0.position + touch1.position) / 2;
+            _initialTouch0Position = touch0.position;
+            _initialTouch1Position = touch1.position;
+            _initialCameraPosition = transform.position;
+            _initialFieldOfView = camera.fieldOfView;
+            _initialMidPointScreen = (touch0.position + touch1.position) / 2;
 
             isZooming = true;
         }
         else
         {
-            transform.position = initialCameraPosition;
-            camera.fieldOfView = initialFieldOfView;
+            transform.position = _initialCameraPosition;
+            camera.fieldOfView = _initialFieldOfView;
 
             float scaleFactor = GetScaleFactor(touch0.position,
                 touch1.position,
-                initialTouch0Position,
-                initialTouch1Position);
+                _initialTouch0Position,
+                _initialTouch1Position);
 
             Vector2 currentMidPoint = (touch0.position + touch1.position) / 2;
-            Vector3 initialPointWorldBeforeZoom = initialMidPointScreen;
+            Vector3 initialPointWorldBeforeZoom = _initialMidPointScreen;
 
-            camera.fieldOfView = Mathf.Clamp(initialFieldOfView / scaleFactor, minFieldOfView, maxFieldOfView);
+            camera.fieldOfView = Mathf.Clamp(_initialFieldOfView / scaleFactor, minFieldOfView, maxFieldOfView);
 
-            Vector3 initialPointWorldAfterZoom = initialMidPointScreen;
+            Vector3 initialPointWorldAfterZoom = _initialMidPointScreen;
             Vector2 initialPointDelta = initialPointWorldBeforeZoom - initialPointWorldAfterZoom;
 
-            Vector2 oldAndNewPointDelta = (Vector3) currentMidPoint - initialMidPointScreen;
+            Vector2 oldAndNewPointDelta = (Vector3) currentMidPoint - _initialMidPointScreen;
 
-            Vector3 newPos = initialCameraPosition;
+            Vector3 newPos = _initialCameraPosition;
 
-            newPos.z += (oldAndNewPointDelta.x - initialPointDelta.x) * currentPanSpeed;
-            newPos.x -= (oldAndNewPointDelta.y - initialPointDelta.y) * currentPanSpeed;
+            newPos.z += (oldAndNewPointDelta.x - initialPointDelta.x) * _currentPanSpeed;
+            newPos.x -= (oldAndNewPointDelta.y - initialPointDelta.y) * _currentPanSpeed;
 
             transform.position = ClampNewCameraPosition(newPos);
         }
@@ -155,8 +155,8 @@ public class CameraController : MonoBehaviour
 
     private Vector3 ClampNewCameraPosition(Vector3 newPos)
     {
-        newPos.z = Mathf.Clamp(newPos.z, posStartCam.z - currentZBoundsLimit, posStartCam.z + currentZBoundsLimit);
-        newPos.x = Mathf.Clamp(newPos.x, posStartCam.x - currentXBoundsLimit, posStartCam.x + currentXBoundsLimit);
+        newPos.z = Mathf.Clamp(newPos.z, _posStartCam.z - _currentZBoundsLimit, _posStartCam.z + _currentZBoundsLimit);
+        newPos.x = Mathf.Clamp(newPos.x, _posStartCam.x - _currentXBoundsLimit, _posStartCam.x + _currentXBoundsLimit);
 
         return newPos;
     }

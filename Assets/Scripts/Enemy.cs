@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _earnings;
     
     private EnemyMovement _enemyMovement;
-    private float health;
+    private float _health;
     private Action<int> Die;
     
     [HideInInspector] public float speed;
@@ -31,16 +31,16 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         speed = startSpeed;
-        health = startHealth;
+        _health = startHealth;
     }
 
     public void TakeDamage(float amount)
     {
-        health -= amount;
+        _health -= amount;
 
-        healthBar.fillAmount = health / startHealth;
+        healthBar.fillAmount = _health / startHealth;
 
-        if (health <= 0)
+        if (_health <= 0)
         {
             Death();
         }

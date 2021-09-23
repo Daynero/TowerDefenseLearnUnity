@@ -11,11 +11,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int startMoney = 400;
     [SerializeField] private int startLives = 20;
 
-    private string nextLevel = ConstantData.Level2;
+    private readonly string _nextLevel = ConstantData.Level2;
     private int _playerMoney;
     private int _playerLives;
     private int _rounds;
-    private bool _isPauseActive = false;
+    private bool _isPauseActive;
     private PauseMenuScreenPresenter _pauseMenuScreenPresenter;
     private GameOverScreenPresenter _gameOverScreenPresenter;
     private WaveSpawner _waveSpawner;
@@ -26,16 +26,15 @@ public class GameManager : MonoBehaviour
     public event Action<int> MoneyUpdateNotify;
     public event Action<int> LivesUpdateNotify;
 
-    public int Rounds
+    private int Rounds
     {
-        private set => _rounds = value;
-        get => _rounds;
+        set => _rounds = value;
     }
     
     public int PlayerMoney
     {
         get => _playerMoney;
-        set
+        private set
         {
             _playerMoney = value;
             MoneyUpdateNotify?.Invoke(_playerMoney);
@@ -160,6 +159,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("LEVEL WON!");
         PlayerPrefs.SetInt("levelReached", levelToUnlock);
         PlayerPrefs.Save();
-        sceneFader.FadeTo(nextLevel);
+        sceneFader.FadeTo(_nextLevel);
     }
 }

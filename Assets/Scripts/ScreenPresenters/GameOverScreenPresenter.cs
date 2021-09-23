@@ -6,10 +6,10 @@ namespace ScreenPresenters
 {
     public class GameOverScreenPresenter
     {
-        private IGameOverScreenView _view;
-        private SceneFader _sceneFader;
+        private readonly IGameOverScreenView _view;
+        private readonly SceneFader _sceneFader;
 
-        private readonly string _menuSceneName = ConstantData.menuSceneName;
+        private readonly string _menuSceneName = ConstantData.MenuSceneName;
         public GameOverScreenPresenter(
             IGameOverScreenView view,
             SceneFader sceneFader 
@@ -23,8 +23,8 @@ namespace ScreenPresenters
 
         private void Initialize()
         {
-            _view.onRetryLevelButtonClick += delegate { _sceneFader.FadeTo(SceneManager.GetActiveScene().name); };
-            _view.onGoToMenuButtonClick += delegate { _sceneFader.FadeTo(_menuSceneName); };
+            _view.OnRetryLevelButtonClick += delegate { _sceneFader.FadeTo(SceneManager.GetActiveScene().name); };
+            _view.OnGoToMenuButtonClick += delegate { _sceneFader.FadeTo(_menuSceneName); };
         }
 
         public void SetRoundsCount(int amount)
@@ -35,8 +35,8 @@ namespace ScreenPresenters
 
     public interface IGameOverScreenView
     {
-        event Action onRetryLevelButtonClick;
-        event Action onGoToMenuButtonClick;
+        event Action OnRetryLevelButtonClick;
+        event Action OnGoToMenuButtonClick;
         public void SetRoundsAmount(int amount);
     }
 }

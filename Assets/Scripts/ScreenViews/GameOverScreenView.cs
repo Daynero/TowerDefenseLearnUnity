@@ -12,13 +12,13 @@ namespace ScreenViews
         [SerializeField] private Button retryLevelButton;
         [SerializeField] private Button goToMenuButton;
 
-        public event Action onRetryLevelButtonClick;
-        public event Action onGoToMenuButtonClick;
+        public event Action OnRetryLevelButtonClick;
+        public event Action OnGoToMenuButtonClick;
     
         private void Start()
         {
-            retryLevelButton.onClick.AddListener(delegate { onRetryLevelButtonClick?.Invoke(); });
-            goToMenuButton.onClick.AddListener(delegate { onGoToMenuButtonClick?.Invoke(); });
+            retryLevelButton.onClick.AddListener(delegate { OnRetryLevelButtonClick?.Invoke(); });
+            goToMenuButton.onClick.AddListener(delegate { OnGoToMenuButtonClick?.Invoke(); });
         }
 
         public void SetRoundsAmount(int amount)
